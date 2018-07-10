@@ -7,7 +7,6 @@ const loginUri = host + '/api/auth/local';
 
 export const fetchLogin = data => {
 	return async dispatch => {
-		console.log(data);
 		const resp = await fetch(loginUri, {
 			headers: {
 				'Accept': 'application/json',
