@@ -10,6 +10,19 @@ const instruction = Platform.select({
 class Home extends Component {
 	constructor(props){
 		super(props);
+		const { navigator } = this.props;
+		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+	}
+	onNavigatorEvent = e => {
+		if(e.type == 'DeepLink') {
+			if(e.link == 'profile') {
+				const { navigator } = this.props;
+				navigator.push({
+					screen: 'Profile',
+					title: '프로필'
+				})
+			}
+		}
 	}
 	render() {
 		return (
