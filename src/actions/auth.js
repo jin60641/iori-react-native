@@ -4,15 +4,13 @@ const { host } = config;
 
 export const login = createAction('LOGIN');
 export const logout = createAction('LOGOUT');
-export const loggedIn = createAction('LOGGEDIN');
 export const join = createAction('JOIN');
 export const verifyMail = createAction('VERIFYMAIL');
 
-const loginUri = host + '/api/auth/local';
-const logoutUri = host + '/api/auth/logout';
-const loggedInUri = host + '/api/auth/loggedin';
-const joinUri = host + '/api/auth/join';
-const verifyMailUri = host + '/api/auth/verify';
+const loginUri = `${host}/api/auth/local`;
+const logoutUri = `${host}/api/auth/logout`;
+const joinUri = `${host}/api/auth/join`;
+const verifyMailUri = `${host}/api/auth/verify`;
 
 export const fetchLogin = (data) => {
 	return async (dispatch) => {
@@ -44,25 +42,6 @@ export const fetchLogout = () => {
 			return dispatch(logout(new Error(body.message)));
 		}
 		return dispatch(logout({}));
-	}
-};
-
-export const fetchLoggedIn = () => {
-	return async (dispatch) => {
-		const resp = await fetch(loggedInUri, {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			method: 'POST',
-			credentials: 'include'
-		});
-		const body = await resp.json();
-		if(body.data){
-			return dispatch(login(body.data));
-		} else {
-			return dispatch(login(new Error(body.msg)));
-		}
 	}
 };
 

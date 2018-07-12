@@ -21,13 +21,13 @@ const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
 }
 add('Side',Side);
-add('Home',Home);
 add('Profile',Profile);
 add('Start',Start);
 add('Login',Login);
 add('Join',Join);
 add('Search',Search);
 add('Chat',Chat);
+add('Home',Home);
 
 Navigation.startTabBasedApp({
 	tabs: [
@@ -69,7 +69,7 @@ Navigation.startTabBasedApp({
 		tabBarButtonColor : colors.gray, // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle
 		tabBarSelectedButtonColor: colors.main, // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
 		tabBarBackgroundColor : colors.white, // optional, change the background color of the tab bar
-		initialTabIndex : 1, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
+		initialTabIndex : 0, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
 	},
 	appStyle: {
 		navBarButtonColor: colors.white,

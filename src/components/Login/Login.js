@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styles from './styles.js';
 import colors from '../../styles/colors';
 import { fetchLogin } from '../../actions/auth';
-import { TouchableHighlight, TextInput, View, Text } from 'react-native';
+import { AsyncStorage, TouchableHighlight, TextInput, View, Text } from 'react-native';
 
 const initialState = {
 	email : '',
@@ -55,8 +55,10 @@ class Login extends Component {
 		const { email, password } = this.state;
 		const data = { email, password };
 		fetchLogin(data) 
-		.then( action => {
+		.then( async action => {
 			if( !action.error ){
+				await AsyncStorage.setItem('email',email);
+				await AsyncStorage.setItem('password',password);
 				this.handleTouchClose();
 			} else {
 				this.setState({ msg : action.payload.message });

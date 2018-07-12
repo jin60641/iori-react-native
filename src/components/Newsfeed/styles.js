@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 export default StyleSheet.create({
-	Home: {
+	Newsfeed : {
 		flex : 1,
-		width : '100%',
+		backgroundColor: colors.white,
+		flexDirection:'column'
 	},
 });
