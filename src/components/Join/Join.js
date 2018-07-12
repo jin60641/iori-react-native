@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.js';
 import colors from '../../styles/colors';
-import { fetchLogin } from '../../actions/auth';
+import { fetchJoin } from '../../actions/auth';
 import { TouchableHighlight, TextInput, View, Text } from 'react-native';
 
 const initialState = {
 	email : '',
 	password : '',
+	passwordCheck : '',
 	focus : null,
 	msg : null,
 }
-class Login extends Component {
+class Join extends Component {
 	constructor(props){
 		super(props);
 		//const { navigator } = this.props;
@@ -30,13 +31,13 @@ class Login extends Component {
 			case 'close' : this.handleTouchClose(); break;
 		}
 	}
-	*/
 	handleTouchClose = () => {
-		const { navigator} = this.props;
+		const { navigator } = this.props;
 		this.props.navigator.dismissModal({
 			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 		});
 	}
+	*/
 	handleChangeText = (field,value) => {
 		this.setState({ [field] : value});
 	}
@@ -50,14 +51,14 @@ class Login extends Component {
 			focus : state.focus===field?null:state.focus
 		}));
 	}
-	handleTouchLogin = () => {
-		const { fetchLogin } = this.props;
+	handleTouchJoin = () => {
+		const { fetchJoin } = this.props;
 		const { email, password } = this.state;
 		const data = { email, password };
-		fetchLogin(data) 
+		fetchJoin(data) 
 		.then( action => {
 			if( !action.error ){
-				this.handleTouchClose();
+				this.setState({ msg : action.payload });
 			} else {
 				this.setState({ msg : action.payload.message });
 			}
@@ -66,12 +67,12 @@ class Login extends Component {
 	render() {
 		const { email, password, msg, pressed, focus } = this.state;
 		return (
-			<View style={styles.Login}>
-				<View style={styles.loginForm}>
-					<Text style={styles.loginText}> 안녕하세요! </Text>
-					<View style={focus==='email'?styles.loginInputFocusBorder:styles.loginInputBorder}>
+			<View style={styles.Join}>
+				<View style={styles.joinForm}>
+					<Text style={styles.joinText}> 환영합니다! </Text>
+					<View style={focus==='email'?styles.joinInputFocusBorder:styles.joinInputBorder}>
 						<TextInput 
-							style={styles.loginInput}
+							style={styles.joinInput}
 							onChangeText={text=>this.handleChangeText('email',text)} 
 							textContentType='email' 
 							autoCapitalize='none'
@@ -80,8 +81,8 @@ class Login extends Component {
 							onBlur={()=>this.onBlur('email')}
 						/>
 					</View>
-					<View style={focus==='password'?styles.loginInputFocusBorder:styles.loginInputBorder}>
-						<TextInput style={styles.loginInput}
+					<View style={focus==='password'?styles.joinInputFocusBorder:styles.joinInputBorder}>
+						<TextInput style={styles.joinInput}
 							onChangeText={text=>this.handleChangeText('password',text)}
 							textContentType='password' 
 							secureTextEntry={true} 
@@ -90,17 +91,27 @@ class Login extends Component {
 							onBlur={()=>this.onBlur('password')}
 						/>
 					</View>
+					<View style={focus==='passwordCheck'?styles.joinInputFocusBorder:styles.joinInputBorder}>
+						<TextInput style={styles.joinInput}
+							onChangeText={text=>this.handleChangeText('passwordCheck',text)}
+							textContentType='password' 
+							secureTextEntry={true} 
+							placeholder="비밀번호 확인"
+							onFocus={()=>this.onFocus('passwordCheck')}
+							onBlur={()=>this.onBlur('passwordCheck')}
+						/>
+					</View>
 					<TouchableHighlight
-						style={styles.loginButton}
-						onPress={this.handleTouchLogin}
+						style={styles.joinButton}
+						onPress={this.handleTouchJoin}
 						activeOpacity={1}
 						underlayColor={colors.main}
 					>
-						<Text style={styles.loginButtonText}>
-							로그인
+						<Text style={styles.joinButtonText}>
+							회원가입
 						</Text>	
 					</TouchableHighlight>
-					<Text style={styles.loginError}>
+					<Text style={styles.joinError}>
 						{ msg }
 					</Text>
 				</View>
@@ -111,6 +122,6 @@ class Login extends Component {
 
 const stateToProps = ({user}) => ({user});
 const actionToProps = {
-	fetchLogin
+	fetchJoin
 }
-export default connect(stateToProps,actionToProps)(Login);
+export default connect(stateToProps,actionToProps)(Join);

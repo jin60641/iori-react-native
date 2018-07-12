@@ -26,22 +26,24 @@ class Side extends Component {
 	handleTouchProfile(){
 		const { user, navigator } = this.props;
 		if( user.verify ){
+			this.handleTouchMenu('profile');
 		} else {
-			this.close();
 			navigator.showModal({
-				screen: "Login", // unique ID registered with Navigation.registerScreen
-				title: "로그인", // title of the screen as appears in the nav bar (optional)
-				passProps: {}, // simple serializable object that will pass as props to the modal (optional)
-				navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+				screen: "Start", // unique ID registered with Navigation.registerScreen
 				animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
 			});
+			this.close();
 		}
 	}
 	handleTouchLogout = id => {
 		this.close();
-		const { fetchLogout } = this.props;
+		const { fetchLogout, navigator } = this.props;
 		fetchLogout()
 		.then( action => {
+			navigator.showModal({
+				screen: "Start",
+				animationType: 'none',
+			});
 		});
 	}
 	handleTouchMenu = id => {

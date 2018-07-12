@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistr } from 'react-native';
+import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 import colors from './styles/colors';
 
@@ -8,34 +9,30 @@ const store = createStore();
 import { Provider } from 'react-redux';
 
 import Home from './components/Home/Home';
-import Login from './components/Login/Login';
 import Side from './components/Side/Side';
 import Profile from './components/Profile/Profile';
-
-class App extends Component {
-	constructor(props){
-		super(props);
-	}
-	render() {
-		return (
-			null
-		);
-	}
-}
+import Start from './components/Start/Start';
+import Login from './components/Login/Login';
+import Join from './components/Join/Join';
+import Chat from './components/Chat/Chat';
+import Search from './components/Search/Search';
 
 const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
 }
-add('App',App);
 add('Side',Side);
 add('Home',Home);
-add('Login',Login);
 add('Profile',Profile);
+add('Start',Start);
+add('Login',Login);
+add('Join',Join);
+add('Search',Search);
+add('Chat',Chat);
 
 Navigation.startTabBasedApp({
 	tabs: [
 		{
-			label: 'One', // tab label as appears under the icon in iOS (optional)
+			label: 'Home', // tab label as appears under the icon in iOS (optional)
 			screen: 'Home', // unique ID registered with Navigation.registerScreen
 			icon: require('./images/one.png'), // local image asset for the tab icon unselected state (optional on iOS)
 			selectedIcon: require('./images/one-active.png'), // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
@@ -47,20 +44,25 @@ Navigation.startTabBasedApp({
 				right: 0 // optional, default is 0.
 			},
 			*/
-			title: 'iori', // title of the screen as appears in the nav bar (optional)
+			title: 'Home', // title of the screen as appears in the nav bar (optional)
 			//titleImage: require('./images/one-title.png'), // iOS only. navigation bar title image instead of the title text of the pushed screen (optional)
 			navigatorStyle: {}, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
 			navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
 		},
-		/*
 		{
-			label: 'Two',
-			screen: 'Login',
-			icon: require('./images/two.png'),
-			selectedIcon: require('./images/two-active.png'),
-			title: 'Screen Two'
-		}
-		*/
+			label: 'Chat',
+			screen: 'Chat',
+			icon: require('./images/one.png'),
+			selectedIcon: require('./images/one-active.png'),
+			title: 'Chat',
+		},
+		{
+			label: 'Search',
+			screen: 'Search',
+			icon: require('./images/one.png'),
+			selectedIcon: require('./images/one-active.png'),
+			title: 'Search',
+		},
 	],
 	tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
 		tabBarTranslucent : false,

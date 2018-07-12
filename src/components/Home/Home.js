@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchLoggedin } from '../../actions/auth';
 import { Platform, View, Text } from 'react-native';
 import styles from './styles.js';
 
@@ -10,8 +12,14 @@ const instruction = Platform.select({
 class Home extends Component {
 	constructor(props){
 		super(props);
-		const { navigator } = this.props;
+		const { user, navigator } = this.props;
 		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+		if( !user.verify ){
+			navigator.showModal({
+				screen: "Start", 
+				animationType: 'none',
+			});
+		}
 	}
 	onNavigatorEvent = e => {
 		if(e.type == 'DeepLink') {
@@ -25,14 +33,25 @@ class Home extends Component {
 		}
 	}
 	render() {
-		return (
-			<View style={styles.Home}>
-				<Text style={styles.homeText}>
-					{ instruction }
-				</Text>
-			</View>
-		);
+		const { user } = this.props;
+		if( user.verify ) {
+			return (
+				<View style={styles.Home}>
+					<Text style={styles.homeText}>
+						{ instruction }
+					</Text>
+				</View>
+			);
+		} else {
+			return ( 
+				null
+			);
+		}
 	}
 }
 
-export default Home;
+const stateToProps = ({user}) => ({user});
+const actionToProps = {
+	fetchLoggedin
+}
+export default connect(stateToProps,actionToProps)(Home);
