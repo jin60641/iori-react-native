@@ -41,12 +41,12 @@ class Post extends Component {
 				</TouchableOpacity>
 				<View style={styles.body}>
 					<View style={styles.inform}>
-						<TouchableOpacity> 
+						<TouchableOpacity style={styles.touch}> 
 							<Text style={styles.name}>
 								{post.user.name} 
 							</Text>
 						</TouchableOpacity>
-						<Text style={styles.date}> {this.getDateString(post.createdAt)} </Text>
+						<Text style={styles.date}> · {this.getDateString(post.createdAt)} </Text>
 					</View>
 					<Text style={styles.text}>
 							{ post.text }

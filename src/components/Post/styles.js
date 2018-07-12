@@ -17,12 +17,18 @@ export default StyleSheet.create({
 		marginRight : 10,
 		backgroundColor : colors.white,
 	},
+	inform : {
+		flexDirection : 'row',
+		alignItems : 'baseline',
+	},
 	name : {
 		fontSize : 13,
 		fontWeight : '800',
 	},
-	inform : {
-		flexDirection : 'row',
+	date : {
+		marginLeft : 3,
+		color : colors.gray,
+		fontSize : 13,
 	},
 	body : {
 		flex : 1,
@@ -32,10 +38,6 @@ export default StyleSheet.create({
 	text : {
 		width : '100%',
 		color : colors.black,
-		fontSize : 13,
-	},
-	date : {
-		color : colors.gray,
 		fontSize : 13,
 	},
 	image : {

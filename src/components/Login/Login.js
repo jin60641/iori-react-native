@@ -14,27 +14,12 @@ const initialState = {
 class Login extends Component {
 	constructor(props){
 		super(props);
-		//const { navigator } = this.props;
-		//this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 		this.state = { ...initialState }
 	}
-	/*
-	static navigatorButtons = {
-		leftButtons : [{
-			title : '닫기',
-			id : 'close'
-		}]
-	}
-	onNavigatorEvent = e => {
-		switch(e.id){
-			case 'close' : this.handleTouchClose(); break;
-		}
-	}
-	*/
 	handleTouchClose = () => {
-		const { navigator} = this.props;
-		this.props.navigator.dismissModal({
-			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+		const { navigator } = this.props;
+		navigator.dismissModal({
+			animationType: 'slide-down'
 		});
 	}
 	handleChangeText = (field,value) => {
