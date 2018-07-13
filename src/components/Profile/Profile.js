@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TouchableOpacity, Image, View, Text } from 'react-native';
+import { TouchableOpacity, Image, View, Text, Dimensions } from 'react-native';
 import { fetchSearchUserByHandle } from '../../actions/search';
 import config from '../../../config';
 const { host } = config;
 //import { fetchSetProfile } from '../../actions/setting';
 import { fetchFollow } from '../../actions/relation';
 import styles from './styles.js';
+import colors from '../../styles/colors';
+
+import TabView from 'react-native-scrollable-tab-view';
+import TabBar from 'react-native-underline-tabbar';
 
 import Newsfeed from '../Newsfeed/Newsfeed';
+const { width } = Dimensions.get('window');
 
 const initialState = {
 	user : null,
-	tab : null,
 	handle : null
 }
 
@@ -54,7 +58,7 @@ class Profile extends Component {
 		});
 	}
 	*/
-	handleClickFollow = () => {
+	handleTouchFollow = () => {
 		const { fetchFollow } = this.props;
 		fetchFollow({ to : this.state.user.id })
 		.then( action => {
@@ -64,7 +68,8 @@ class Profile extends Component {
 		});
 	}
 	render(){
-		const { user, naviagtor } = this.state;
+		const { navigator } = this.props;
+		const { user } = this.state;
 		if( !user ){
 			return null;
 		}
@@ -94,7 +99,21 @@ class Profile extends Component {
 					<Text style={styles.name}>{user.name}</Text>
 					<Text style={styles.handle}>@{user.handle}</Text>
 				</View>
-				<Newsfeed navigator={navigator} options={ { userId : user.id } }/>
+				<TabView
+					tabBarActiveTextColor={colors.main}
+					locked={true}
+					renderTabBar={() => 
+						<TabBar 
+							underlineColor={colors.main} 
+							tabStyles={{tab:{width:width/3}}} 
+							tabMargin={0.00001}
+						/>
+					}
+				>
+					<Newsfeed tabLabel={{label:"게시글"}} label="게시글" navigator={navigator} options={ { userId : user.id } }/>
+					<Newsfeed tabLabel={{label:"이미지"}} label="게시글" navigator={navigator} options={ { userId : user.id } }/>
+					<Newsfeed tabLabel={{label:"좋아요"}} label="게시글" navigator={navigator} options={ { userId : user.id } }/>
+				</TabView>
 			</View>
 		);
 	}

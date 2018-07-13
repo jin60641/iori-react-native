@@ -39,5 +39,5 @@ export default StyleSheet.create({
 	handle : {
 		fontSize : 12,
 		color : colors.gray
-	}
+	},
 });
