@@ -32,16 +32,21 @@ class Post extends Component {
 		}
 	}
 	render() {
-		const { post, user } = this.props;
+		const { post, user, handleTouchUser } = this.props;
 		const profileUri = post.user.profile?{uri:`${host}/public/files/profile/${post.user.id}.png`}:profile;
 		return (
 			<View style={styles.Post}>
-				<TouchableOpacity> 
+				<TouchableOpacity
+					onPress={()=>handleTouchUser(post.user.handle)}
+				> 
 					<Image source={profileUri} style={styles.profile} />
 				</TouchableOpacity>
 				<View style={styles.body}>
 					<View style={styles.inform}>
-						<TouchableOpacity style={styles.touch}> 
+						<TouchableOpacity 
+							style={styles.touch}
+							onPress={()=>handleTouchUser(post.user.handle)}
+						> 
 							<Text style={styles.name}>
 								{post.user.name} 
 							</Text>

@@ -12,7 +12,7 @@ class Write extends Component {
 		super(props);
 		this.state = { ...initialState }
 		const { navigator } = this.props;
-		this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
 	static navigatorButtons = {
 		leftButtons : [{
@@ -37,10 +37,7 @@ class Write extends Component {
         });
     }
 	handleTouchSend = () => {
-		const { navigator } = this.props;
-        navigator.dismissModal({
-            animationType: 'slide-down'
-        });
+		this.handleTouchClose();
 	}
 	render() {
 		return (

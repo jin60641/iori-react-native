@@ -7,6 +7,12 @@ import styles from './styles.js';
 import Newsfeed from '../Newsfeed/Newsfeed';
 
 class Home extends Component {
+    static navigatorButtons = {
+        rightButtons : [{
+            title : '글쓰기',
+            id : 'write'
+        }]
+    }
 	constructor(props){
 		super(props);
 		const { navigator } = this.props;
@@ -36,25 +42,37 @@ class Home extends Component {
 			animationType: 'none',
 		});
 	}
+	handleTouchWrite = () => {
+		const { navigator } = this.props;
+		navigator.showModal({
+			screen: "Write", 
+			title : '글쓰기',
+			animationType: 'slide-down',
+		});
+	}
 	onNavigatorEvent = e => {
 		if(e.type == 'DeepLink') {
 			if(e.link == 'profile') {
 				const { navigator } = this.props;
 				navigator.push({
 					screen: 'Profile',
-					title: '프로필'
+					title: '프로필',
 				})
 			}
+		} else {
+        	switch(e.id){
+        	    case 'write' : this.handleTouchWrite(); break;
+        	}
 		}
 	}
 	render() {
-		const { user } = this.props;
+		const { user, navigator } = this.props;
 		if( !user.verify ) {
 			return (null);
 		}
 		return (
 			<View style={styles.Home}>
-				<Newsfeed />
+				<Newsfeed navigator={navigator}/>
 			</View>
 		);
 	}

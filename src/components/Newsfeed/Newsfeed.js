@@ -7,7 +7,7 @@ import { FlatList, View } from 'react-native';
 import Post from '../Post/Post';
 
 const initialOptions = {
-	limit : 10
+	limit : 20
 }
 
 const initialState = {
@@ -23,7 +23,7 @@ class Newsfeed extends Component {
 		const { loading } = this.state;
 		if( loading ) return false;
 		const { fetchGetPosts, posts } = this.props;
-		const data = Object.assign(initialOptions,{ offset : posts.length }, options);
+		const data = Object.assign(initialOptions,this.props.options,{ offset : posts.length }, options);
 		this.setState({
 			loading : true
 		});
@@ -39,13 +39,21 @@ class Newsfeed extends Component {
 	componentDidMount = () => {
 		this.handleGetPosts();
 	}
+	handleTouchUser = handle => {
+		const { navigator } = this.props;
+		navigator.push({
+			screen: 'Profile',
+			title: '프로필',
+			passProps : { handle }
+		});
+	}
 	render() {
 		const { user, posts } = this.props;
 		return (
 			<View style={styles.Newsfeed}>
 				<FlatList
 					data={posts}
-					renderItem={ ({item }) => <Post post={item} /> }
+					renderItem={ ({item }) => <Post post={item} handleTouchUser={this.handleTouchUser}/> }
 					keyExtractor={ item => `Post-${item.id}` }
 					onEndReached={ this.handleGetPosts }
 					onEndReachedThreshold={1}
@@ -57,6 +65,6 @@ class Newsfeed extends Component {
 
 const stateToProps = ({user,posts}) => ({user,posts});
 const actionToProps = {
-    fetchGetPosts
+	fetchGetPosts
 }
 export default connect(stateToProps,actionToProps)(Newsfeed);

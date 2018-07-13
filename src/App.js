@@ -16,10 +16,14 @@ import Login from './components/Login/Login';
 import Join from './components/Join/Join';
 import Chat from './components/Chat/Chat';
 import Search from './components/Search/Search';
+import Write from './components/Write/Write';
+import Newsfeed from './components/Newsfeed/Newsfeed';
+import Post from './components/Post/Post';
 
 const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
 }
+add('Home',Home);
 add('Side',Side);
 add('Profile',Profile);
 add('Start',Start);
@@ -27,27 +31,17 @@ add('Login',Login);
 add('Join',Join);
 add('Search',Search);
 add('Chat',Chat);
-add('Home',Home);
+add('Write',Write);
 
 Navigation.startTabBasedApp({
 	tabs: [
 		{
-			label: 'Home', // tab label as appears under the icon in iOS (optional)
-			screen: 'Home', // unique ID registered with Navigation.registerScreen
-			icon: require('./images/one.png'), // local image asset for the tab icon unselected state (optional on iOS)
-			selectedIcon: require('./images/one-active.png'), // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
-			/*
-			iconInsets: { // add this to change icon position (optional, iOS only).
-				top: 6, // optional, default is 0.
-				left: 0, // optional, default is 0.
-				bottom: -6, // optional, default is 0.
-				right: 0 // optional, default is 0.
-			},
-			*/
-			title: 'Home', // title of the screen as appears in the nav bar (optional)
+			label: 'Home', 
+			screen: 'Home', 
+			title: 'Home', 
+			icon: require('./images/one.png'), 
+			selectedIcon: require('./images/one-active.png'), 
 			//titleImage: require('./images/one-title.png'), // iOS only. navigation bar title image instead of the title text of the pushed screen (optional)
-			navigatorStyle: {}, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
-			navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
 		},
 		{
 			label: 'Chat',

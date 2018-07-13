@@ -7,6 +7,7 @@ import { TouchableHighlight, TextInput, View, Text } from 'react-native';
 
 const initialState = {
 	email : '',
+	handle : '',
 	password : '',
 	passwordCheck : '',
 	focus : null,
@@ -53,8 +54,8 @@ class Join extends Component {
 	}
 	handleTouchJoin = () => {
 		const { fetchJoin } = this.props;
-		const { email, password } = this.state;
-		const data = { email, password };
+		const { email, password, handle } = this.state;
+		const data = { email, password, handle };
 		fetchJoin(data) 
 		.then( action => {
 			if( !action.error ){
@@ -65,7 +66,7 @@ class Join extends Component {
 		});
 	}
 	render() {
-		const { email, password, msg, pressed, focus } = this.state;
+		const { email, password, handle, msg, pressed, focus } = this.state;
 		return (
 			<View style={styles.Join}>
 				<View style={styles.joinForm}>
@@ -79,6 +80,16 @@ class Join extends Component {
 							placeholder='이메일'
 							onFocus={()=>this.onFocus('email')}
 							onBlur={()=>this.onBlur('email')}
+						/>
+					</View>
+					<View style={focus==='handle'?styles.joinInputFocusBorder:styles.joinInputBorder}>
+						<TextInput 
+							style={styles.joinInput}
+							onChangeText={text=>this.handleChangeText('handle',text)} 
+							autoCapitalize='none'
+							placeholder='핸들'
+							onFocus={()=>this.onFocus('handle')}
+							onBlur={()=>this.onBlur('handle')}
 						/>
 					</View>
 					<View style={focus==='password'?styles.joinInputFocusBorder:styles.joinInputBorder}>
