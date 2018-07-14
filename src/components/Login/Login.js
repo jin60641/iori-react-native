@@ -62,7 +62,7 @@ class Login extends Component {
 							onChangeText={text=>this.handleChangeText('email',text)} 
 							textContentType='email' 
 							autoCapitalize='none'
-							placeholder='이메일'
+							placeholder='이메일 혹은 핸들'
 							onFocus={()=>this.onFocus('email')}
 							onBlur={()=>this.onBlur('email')}
 						/>

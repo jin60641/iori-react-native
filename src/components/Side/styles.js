@@ -3,7 +3,7 @@ import colors from '../../styles/colors';
 export default StyleSheet.create({
 	Side: {
 		flex: 1,
-		backgroundColor: colors.background,
+		backgroundColor: colors.white,
 	},
 	profile: {
 		padding : 25,
@@ -20,7 +20,7 @@ export default StyleSheet.create({
 	},
 	profileName: {
 		color : colors.black,
-		fontSize : 18
+		fontSize : 20
 	},
 	tabMenu : {
 		padding : 25,
@@ -42,29 +42,26 @@ export default StyleSheet.create({
 	},
 	menuTabName : {
 		flex : 1,
-		paddingLeft : 15
+		paddingLeft : 15,
+		fontSize : 18
 	},
 	bottomMenu : {
 		padding : 25,
 		borderTopWidth : 1,
 		borderTopColor : colors.gray,
 		width : '100%',
-		flexDirection : 'row',
 	},
 	bottomMenuButton : {
-		flex : 0.5,
+		width : '100%',
 		height : 30,
+		marginBottom : 20
 	},
 	bottomMenuTab : {
 		height : 30,
 		flexDirection : 'row',
         alignItems: 'center',
 	},
-	bottomMenuTabImg : {
-		width : 30,
-		height : 30
-	},
 	bottomMenuTabName : {
-		paddingLeft : 10
+		fontSize : 18
 	}
 });

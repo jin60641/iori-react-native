@@ -5,11 +5,21 @@ import { TouchableOpacity, Image, View, Text } from 'react-native';
 import Login from '../Login/Login';
 import styles from './styles.js';
 
-const sideTabMenus = [{
-	id : 'profile',
-	name : '프로필',
-	img : require('../../images/side-tab-profile.png'),
-}]
+const tabMenus = {
+	side : [{
+		id : 'profile',
+		name : '프로필',
+		img : require('../../images/side-tab-profile.png'),
+	}],
+	bottom : [{
+		id : 'logout',
+		name : '로그아웃'
+	},{
+		id : 'setting',
+		name : '설정'
+	}]
+}
+
 
 class Side extends Component {
 	constructor(props){
@@ -23,20 +33,11 @@ class Side extends Component {
 			to: 'close' 
 		});
 	}
-	handleTouchProfile(){
-		const { user, navigator } = this.props;
-		if( user.verify ){
-			this.handleTouchMenu('profile');
-		} else {
-			navigator.showModal({
-				screen: "Start", // unique ID registered with Navigation.registerScreen
-				animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
-			});
-			this.close();
-		}
+	handleTouchProfile = () => {
+		const { navigator } = this.props;
+		this.handleTouchMenu('profile');
 	}
-	handleTouchLogout = id => {
-		this.close();
+	handleTouchLogout = () => {
 		const { fetchLogout, navigator } = this.props;
 		fetchLogout()
 		.then( action => {
@@ -45,6 +46,13 @@ class Side extends Component {
 				animationType: 'none',
 			});
 		});
+	}
+	handleTouchBottomMenu = id => {
+		this.close();
+		switch(id){
+			case 'logout' : this.handleTouchLogout(); break;
+			case 'setting' : this.handleTouchLogout(); break;
+		}
 	}
 	handleTouchMenu = id => {
 		this.close();
@@ -63,13 +71,13 @@ class Side extends Component {
 					<View style={styles.profile}>
 						<Image source={require('../../images/profile.png')} style={styles.profileImg} />
 						<Text style={styles.profileName} > 
-							{ user.verify ? user.name : "로그인 해주세요" }
+							{ user.name }
 						</Text>
 					</View>
 				</TouchableOpacity>
 				<View style={styles.tabMenu}>
 				{ 
-					user.verify ? sideTabMenus.map( menu => (
+					tabMenus.side.map( menu => (
 						<TouchableOpacity 
 							key={`side-menu-${menu.id}`}
 							onPress={ (() => this.handleTouchMenu(menu.id)).bind(this) }
@@ -81,35 +89,21 @@ class Side extends Component {
 							</View>
 						</TouchableOpacity>
 					)) 
-					: null
 				}
 				</View>
 				<View style={styles.bottomMenu}>
 				{
-					user.verify ? 
+					tabMenus.bottom.map( menu => (
 						<TouchableOpacity 
-							onPress={ this.handleTouchLogout.bind(this) }
+							key={`side-bottom-menu-${menu.id}`}
+							onPress={ (() => this.handleTouchBottomMenu(menu.id)).bind(this) }
 							style={styles.bottomMenuButton}
 						>
 							<View style={styles.bottomMenuTab}>
-								<Image source={require('../../images/side-logout.png')} style={styles.bottomMenuTabImg} />
-								<Text style={styles.bottomMenuTabName}> 로그아웃 </Text>
+								<Text style={styles.bottomMenuTabName}> {menu.name} </Text>
 							</View>
 						</TouchableOpacity>
-					: null
-				}
-				{
-					user.verify ? 
-						<TouchableOpacity 
-							onPress={ this.handleTouchLogout.bind(this) }
-							style={styles.bottomMenuButton}
-						>
-							<View style={styles.bottomMenuTab}>
-								<Image source={require('../../images/side-logout.png')} style={styles.bottomMenuTabImg} />
-								<Text style={styles.bottomMenuTabName}> 설정 </Text>
-							</View>
-						</TouchableOpacity>
-					: null
+					)) 
 				}
 				</View>
 			</View>
