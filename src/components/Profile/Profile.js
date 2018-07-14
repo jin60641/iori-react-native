@@ -111,7 +111,7 @@ class Profile extends Component {
 					}
 				>
 					<Newsfeed tabLabel={{label:"게시글"}} label="게시글" navigator={navigator} options={ { userId : user.id } }/>
-					<Newsfeed tabLabel={{label:"이미지"}} label="게시글" navigator={navigator} options={ { userId : user.id } }/>
+					<Newsfeed tabLabel={{label:"이미지"}} label="게시글" navigator={navigator} options={ { userId : user.id, file : true } }/>
 					<Newsfeed tabLabel={{label:"좋아요"}} label="게시글" navigator={navigator} options={ { userId : user.id } }/>
 				</TabView>
 			</View>

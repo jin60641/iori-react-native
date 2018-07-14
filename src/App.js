@@ -14,11 +14,10 @@ import Profile from './components/Profile/Profile';
 import Start from './components/Start/Start';
 import Login from './components/Login/Login';
 import Join from './components/Join/Join';
-import Chat from './components/Chat/Chat';
 import Search from './components/Search/Search';
+import Chat from './components/Chat/Chat';
+import Room from './components/Chat/Room';
 import Write from './components/Write/Write';
-import Newsfeed from './components/Newsfeed/Newsfeed';
-import Post from './components/Post/Post';
 
 const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
@@ -31,6 +30,7 @@ add('Login',Login);
 add('Join',Join);
 add('Search',Search);
 add('Chat',Chat);
+add('Room',Room);
 add('Write',Write);
 
 Navigation.startTabBasedApp({
@@ -38,7 +38,7 @@ Navigation.startTabBasedApp({
 		{
 			label: 'Home', 
 			screen: 'Home', 
-			title: 'Home', 
+			title: '홈', 
 			icon: require('./images/tab-home.png'), 
 			//selectedIcon: require('./images/one-active.png'), 
 			//titleImage: require('./images/one-title.png'), // iOS only. navigation bar title image instead of the title text of the pushed screen (optional)
@@ -46,14 +46,14 @@ Navigation.startTabBasedApp({
 		{
 			label: 'Chat',
 			screen: 'Chat',
-			title: 'Chat',
+			title: '채팅',
 			icon: require('./images/tab-chat.png'), 
 			//selectedIcon: require('./images/one-active.png'),
 		},
 		{
 			label: 'Search',
 			screen: 'Search',
-			title: 'Search',
+			title: '검색',
 			icon: require('./images/tab-search.png'), 
 			//selectedIcon: require('./images/one-active.png'),
 		},
@@ -76,19 +76,12 @@ Navigation.startTabBasedApp({
 		backButtonImage: require('./images/back.png'), // Change the back button default arrow image with provided image. iOS only
 		hideBackButtonTitle: true // Hide back button title. Default is false. If `backButtonTitle` provided so it will take into account and the `backButtonTitle` value will show. iOS only
 	},
-	drawer: { // optional, add this if you want a side menu drawer in your app
-		left: { // optional, define if you want a drawer from the left
-			screen: 'Side', // unique ID registered with Navigation.registerScreen
-			passProps: {}, // simple serializable object that will pass as props to all top screens (optional),
-			fixedWidth: 500, // a fixed width you want your left drawer to have (optional)
+	drawer: { 
+		left: { 
+			screen: 'Side',
+			passProps: {}, 
+			fixedWidth: 500,
 		},
-		/*
-		right: { // optional, define if you want a drawer from the right
-			screen: 'Login', // unique ID registered with Navigation.registerScreen
-			passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
-			fixedWidth: 500, // a fixed width you want your right drawer to have (optional)
-		},
-		*/
 		style: { // ( iOS only )
 			drawerShadow: false, // optional, add this if you want a side menu drawer shadow
 			contentOverlayColor: 'rgba(0,0,0,0.25)', // optional, add this if you want a overlay color when drawer is open

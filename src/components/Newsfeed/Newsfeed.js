@@ -11,7 +11,8 @@ const initialOptions = {
 }
 
 const initialState = {
-	loading : false
+	loading : false,
+	posts : []
 }
 
 class Newsfeed extends Component {
@@ -20,9 +21,9 @@ class Newsfeed extends Component {
 		this.state = { ...initialState }
 	}
 	handleGetPosts = (options = {}) => {
-		const { loading } = this.state;
+		const { loading, posts } = this.state;
 		if( loading ) return false;
-		const { fetchGetPosts, posts } = this.props;
+		const { fetchGetPosts } = this.props;
 		const data = Object.assign(initialOptions,this.props.options,{ offset : posts.length }, options);
 		this.setState({
 			loading : true
@@ -31,7 +32,8 @@ class Newsfeed extends Component {
 		.then( action => {
 			if( !action.error ){
 				this.setState({
-					loading: false
+					loading: false,
+					posts : posts.concat(action.payload)
 				});
 			}   
 		}); 
@@ -48,7 +50,8 @@ class Newsfeed extends Component {
 		});
 	}
 	render() {
-		const { user, posts } = this.props;
+		const { user } = this.props;
+		const { posts } = this.state;
 		return (
 			<View style={styles.Newsfeed}>
 				<FlatList
@@ -63,7 +66,7 @@ class Newsfeed extends Component {
 	}
 }
 
-const stateToProps = ({user,posts}) => ({user,posts});
+const stateToProps = ({user}) => ({user});
 const actionToProps = {
 	fetchGetPosts
 }
