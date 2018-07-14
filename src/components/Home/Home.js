@@ -46,7 +46,6 @@ class Home extends Component {
 		const { navigator } = this.props;
 		navigator.showModal({
 			screen: "Write", 
-			title : '글쓰기',
 			animationType: 'slide-down',
 		});
 	}
