@@ -25,6 +25,7 @@ export default StyleSheet.create({
 		borderRadius : 40,
 		borderWidth : 5,
 		borderColor : colors.white,
+		backgroundColor : colors.white,
 		position : 'absolute',
 		marginTop : -40,
 		marginLeft : 10

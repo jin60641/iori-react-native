@@ -6,6 +6,9 @@ import styles from './styles.js';
 
 import Newsfeed from '../Newsfeed/Newsfeed';
 
+const initialState = {
+	refresh : false
+}
 class Home extends Component {
     static navigatorButtons = {
         rightButtons : [{
@@ -15,6 +18,7 @@ class Home extends Component {
     }
 	constructor(props){
 		super(props);
+		this.state = { ...initialState };
 		const { navigator } = this.props;
 		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
@@ -47,16 +51,21 @@ class Home extends Component {
 		navigator.showModal({
 			screen: "Write", 
 			animationType: 'slide-down',
+			passProps: { link : 'Newsfeed.Home' }
 		});
 	}
 	onNavigatorEvent = e => {
-		if(e.type == 'DeepLink') {
-			if(e.link == 'profile') {
+		if(e.type === 'DeepLink') {
+			if(e.link === 'profile') {
 				const { navigator } = this.props;
 				navigator.push({
 					screen: 'Profile',
 					title: '프로필',
 				})
+			} else if( e.link === 'Newsfeed.Home' ){
+				this.setState({
+					refresh : true
+				});
 			}
 		} else {
         	switch(e.id){
@@ -64,14 +73,20 @@ class Home extends Component {
         	}
 		}
 	}
+	finishRefresh = () => {	
+		this.setState({
+			refresh : false
+		});
+	}
 	render() {
 		const { user, navigator } = this.props;
+		const { refresh } = this.state;
 		if( !user.verify ) {
 			return (null);
 		}
 		return (
 			<View style={styles.Home}>
-				<Newsfeed navigator={navigator}/>
+				<Newsfeed navigator={navigator} refresh={refresh} finishRefresh={this.finishRefresh}/>
 			</View>
 		);
 	}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.js';
+import colors from '../../styles/colors';
 import { fetchGetPosts } from '../../actions/newsfeed';
-import { FlatList, View } from 'react-native';
+import { RefreshControl, FlatList, View, ScrollView } from 'react-native';
 
 import Post from '../Post/Post';
 
@@ -12,19 +13,20 @@ const initialOptions = {
 
 const initialState = {
 	loading : false,
-	posts : []
+	refreshing : false,
+	posts : [],
 }
 
 class Newsfeed extends Component {
 	constructor(props){
 		super(props);
 		this.state = { ...initialState }
-	}
-	handleGetPosts = (options = {}) => {
+    }
+	getPosts = (options = {}) => {
 		const { loading, posts } = this.state;
 		if( loading ) return false;
 		const { fetchGetPosts } = this.props;
-		const data = Object.assign(initialOptions,this.props.options,{ offset : posts.length }, options);
+		const data = { ...initialOptions, ...this.props.options, offset : posts.length, ...options };
 		this.setState({
 			loading : true
 		});
@@ -33,13 +35,20 @@ class Newsfeed extends Component {
 			if( !action.error ){
 				this.setState({
 					loading: false,
-					posts : posts.concat(action.payload)
+					refreshing: false,
+					posts : data.id?action.payload.concat(posts):posts.concat(action.payload)
 				});
-			}   
+			}	 
 		}); 
 	}
 	componentDidMount = () => {
-		this.handleGetPosts();
+		this.getPosts();
+	}
+	componentDidUpdate = (prevProps,prevState) => {
+		if( prevProps.refresh === false && this.props.refresh ){
+			this.handleRefresh();
+			this.props.finishRefresh();
+		}
 	}
 	handleTouchUser = handle => {
 		const { navigator } = this.props;
@@ -49,17 +58,55 @@ class Newsfeed extends Component {
 			passProps : { handle }
 		});
 	}
+	handleEndReached = () => {
+		this.getPosts();
+	}
+	handleRefresh = () => {
+		const { posts } = this.state;
+		const id = posts[0]?posts[0].id:0;
+		this.getPosts({ offset : 0, id });
+	}
 	render() {
 		const { user } = this.props;
-		const { posts } = this.state;
+		const { posts, refreshing } = this.state;
+		/*
+		// by ScrollView
+		return (
+			<ScrollView 
+				style={styles.Newsfeed}
+				onScrollEndDrag={ this.handleEndReached.bind(this) }
+				refreshControl={
+					<RefreshControl
+						colors={[colors.main,colors.gray]}
+						tintColor={colors.main}
+						refreshing={refreshing}
+						onRefresh={this.handleRefresh.bind(this)}
+					/>
+				}
+			>
+				{ posts.map( post => (
+					<Post key={`Post-${post.id}`} post={post} handleTouchUser={this.handleTouchUser}/> 
+				))}
+			</ScrollView>
+		);
+		*/
+		// by FlatList
 		return (
 			<View style={styles.Newsfeed}>
 				<FlatList
 					data={posts}
 					renderItem={ ({item }) => <Post post={item} handleTouchUser={this.handleTouchUser}/> }
 					keyExtractor={ item => `Post-${item.id}` }
-					onEndReached={ this.handleGetPosts }
-					onEndReachedThreshold={1}
+					onEndReached={ this.handleEndReached.bind(this) }
+					onEndReachedThreshold={0.8}
+					refreshControl={
+						<RefreshControl
+							colors={[colors.main,colors.gray]}
+							tintColor={colors.main}
+							refreshing={refreshing}
+							onRefresh={this.handleRefresh.bind(this)}
+						/>
+					}
 				/>
 			</View>
 		);

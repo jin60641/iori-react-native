@@ -57,7 +57,28 @@ class Write extends Component {
 		});
 	}
 	handleTouchSend = () => {
-		this.handleTouchClose();
+		const { fetchWritePost } = this.props;
+		const { text, files } = this.state;
+		const data = new FormData();
+		if( !( text.length || files.length ) ){
+			return 0;
+		}
+		data.append("text",text);
+		Array.from(files).forEach( file => {
+			data.append('file',file.data);
+		})
+		fetchWritePost(data)
+		.then( action => {
+			if( !action.error ){
+				this.handleTouchClose();
+				const { navigator, link } = this.props;
+				navigator.handleDeepLink({
+					link
+				});
+			} else {
+				
+			}
+		});
 	}
 	handleChangeText = text => {
 		this.setState({ text });

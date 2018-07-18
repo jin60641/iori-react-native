@@ -5,7 +5,6 @@ const { host } = config;
 export const writePost = createAction('WRITEPOST');
 export const getPosts = createAction('GETPOSTS');
 export const getPost = createAction('GETPOST');
-export const resetPosts = createAction('RESETPOSTS');
 export const removePost = createAction('REMOVEPOSTS');
 
 const writePostUri = `${host}/api/newsfeed/writepost`;

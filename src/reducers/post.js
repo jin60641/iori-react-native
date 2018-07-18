@@ -8,29 +8,29 @@ export default handleActions({
 		if( action.error ){
 			return state;
 		}
-		const index = state.findIndex( post => post.id === action.payload.id );
-		return state.slice(0,index).concat(action.payload).concat(state.slice(index+1));
-	},
-	[resetPosts]: (state, action) => {
-		return [];
+		//const index = state.findIndex( post => post.id === action.payload.id );
+		//return state.slice(0,index).concat(action.payload).concat(state.slice(index+1));
+		return state;
 	},
 	[getPosts]: (state, action) => {
 		if( action.error ) {
 			return state;
 		}
-		console.log(action.payload);
-		return state.concat(action.payload);
+		//return state.concat(action.payload);
+		return action.payload;
 	},
 	[writePost]: (state, action) => {
 		if( action.error ) {
 			return state;
 		}
-		return [action.payload].concat(state);
+		//return [action.payload].concat(state);
+		return [action.payload];
 	},
 	[getPost]: (state, action) => {
 		if( action.error ) {
 			return state;
 		}
-		return state.concat([action.payload]);
+		//return state.concat([action.payload]);
+		return [action.payload];
 	}
 }, initialState );

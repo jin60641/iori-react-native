@@ -74,15 +74,15 @@ class Profile extends Component {
 			return null;
 		}
 		const my = user.verify && user.id === this.props.user.id;
-		const profileUri = user.profile ? `${host}/public/files/profile/${user.id}.png`:'../../images/profile.png';
-		const headerUri = `${host}/public/files/header/${user.id}.png`;
+		const profileUri = user.profile ? { uri : `${host}/public/files/profile/${user.id}.png` }:require('../../images/profile.png');
+		const headerUri = { uri : `${host}/public/files/header/${user.id}.png` };
 		return(
 			<View style={styles.Profile}>
 				<View style={styles.header}>
-					{ user.header ? <Image source={{ uri : headerUri }} style={styles.headerImg} /> : null }
+					{ user.header ? <Image source={ headerUri } style={styles.headerImg} /> : null }
 				</View>
 				<View style={styles.container}>
-					<Image source={{ uri: profileUri }} style={styles.profileImg}/>
+					<Image source={ profileUri } style={styles.profileImg}/>
 					{ my ? 
 						<View style={styles.buttons}>
 							<View>

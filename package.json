@@ -1,11 +1,11 @@
 {
-  "name": "react_native_navigation_bootstrap",
+  "name": "iori",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "watchman watch-del-all && (adb reverse tcp:8081 tcp:8081 || true) && node node_modules/react-native/local-cli/cli.js start",
     "android": "cd android ; ./gradlew installDebug",
-    "xcode": "open ios/react_native_navigation_bootstrap.xcodeproj"
+    "xcode": "open ios/iori.xcodeproj"
   },
   "dependencies": {
     "prop-types": "*",
