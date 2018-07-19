@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './styles.js';
+import styles from './styles.Chat.js';
 import colors from '../../styles/colors';
 import { fetchSearchGroup, fetchSearchUserByHandle, fetchSearchUsers } from '../../actions/search';
 import { fetchGetDialogs, fetchMakeGroup } from '../../actions/chat';
@@ -76,7 +76,8 @@ class Chat extends Component {
 			title : to.name,
 			passProps : {
 				type,
-				to
+				to,
+				handle : this.getFullHandle(type,to.handle)
 			}
 		});
 	}

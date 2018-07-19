@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './styles.js';
+import styles from './styles.Newsfeed.js';
 import colors from '../../styles/colors';
 import { fetchGetPosts } from '../../actions/newsfeed';
 import { RefreshControl, FlatList, View, ScrollView } from 'react-native';

@@ -1,80 +1,78 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './styles.js';
+import styles from './styles.Room.js';
 import colors from '../../styles/colors';
-import { fetchSendChat, fetchGetChats } from '../../actions/chat';
+import { fetchGetChats } from '../../actions/chat';
+import { FlatList, TextInput, View, Text } from 'react-native';
 
-import { TouchableHighlight, TextInput, View, Text } from 'react-native';
+import Form from './Form';
+import Message from './Message';
 
 const initialState = {
 	loading : false,
-	text : ''
 }
+
+const limit = 20;
+
 class Room extends Component {
 	constructor(props){
 		super(props);
 		this.state = { ...initialState };
+		const { navigator } = this.props;
+		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
-	getChats = (from,type,offset) => {
+	onNavigatorEvent = e => {
+		if( e.type === 'ScreenChangedEvent' && e.id === 'willAppear' ){
+			this.getChats();
+		}
+	}
+	componentDidMount = () => {
+//		this.getChats();
+	}
+	getChats = () => {
+		const { to, type, handle, chats, fetchGetChats } = this.props;
 		const { loading } = this.state;
-		if( loading === false ){
-			this.setState({loading : true });
-			const { fetchGetChats } = this.props;
-			fetchGetChats({ from, type, limit, offset })
-			.then( action => {
-				this.setState({loading : false });
-			});
+		if( loading === true ){
+			return null;
 		}
-	}
-	sendChat = (file) => {
-		const { fetchSendChat, to, type } = this.props;
-		const { text } = this.state;
-		let formData = new FormData();
-		formData.append("to",to.id);
-		formData.append("type",type);
-		if( !file ){
-			formData.append("text",text);
-			this.setState({
-				text : ""
-			});
-		} else {
-			formData.append("text","");
-			formData.append("file",file);
-		}
-		fetchSendChat(formData)
-		.then( (action) => {
-			if( !action.error ){
-			} else {
-			}
-		})
-	}
-	handleClickSend = () => {
-		const { text } = this.state;
-		if( !text.length ){
-			return 0;
-		}
-		this.sendChat();
-	}
-	handleChangeFile = e => {
-		e.preventDefault();
-		const { files } = e.target;
-		Array.from(files).forEach( file => {
-			this.sendChat(file);
+		this.setState({loading : true });
+		const offset = chats[handle]?chats[handle].length:0;
+		fetchGetChats({ from : to, type, limit, offset })
+		.then( action => {
+			this.setState({loading : false });
 		});
-		e.target.value = "";
+	}
+	handleTouchUser = handle => {
+		const { navigator } = this.props;
+		navigator.push({
+			screen: 'Profile',
+			title: '프로필',
+			passProps : { handle }
+		});
+	}
+	handleEndReached = () => {
+		this.getChats();
 	}
 	render(){
+		const { handle, chats, user } = this.props;
 		return(
 			<View style={styles.Room}>
-				
+				<FlatList
+					inverted={true}
+					data={chats[handle]}
+					renderItem={ ({ item }) => <Message chat={item} handleTouchUser={this.handleTouchUser} user={user}/> }
+					keyExtractor={ item => `Message-${item.id}` }
+					onEndReached={ this.handleEndReached.bind(this) }
+					onEndReachedThreshold={0.8}
+				/>
+				<Form />
 			</View>
 		);
 	}
 }
 
-const stateToProps = ({chats}) => ({chats});
+const stateToProps = ({chats,user}) => ({chats,user});
 const actionToProps = {
-	fetchSendChat,
 	fetchGetChats,
 };
 

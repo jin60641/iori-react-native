@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import styles from './styles.js';
+import styles from './styles.Post.js';
 import config from '../../../config';
 const { host } = config;
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchLogout } from '../../actions/auth';
 import { TouchableOpacity, Image, View, Text } from 'react-native';
 import Login from '../Login/Login';
-import styles from './styles.js';
+import styles from './styles.Side.js';
 
 const tabMenus = {
 	side : [{

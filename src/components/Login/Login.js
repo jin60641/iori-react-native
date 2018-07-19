@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './styles.js';
+import styles from './styles.Login.js';
 import colors from '../../styles/colors';
 import { fetchLogin } from '../../actions/auth';
 import { AsyncStorage, TouchableHighlight, TextInput, View, Text } from 'react-native';

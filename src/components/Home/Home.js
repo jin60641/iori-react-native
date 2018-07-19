@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLogin } from '../../actions/auth';
 import { AsyncStorage, View } from 'react-native';
-import styles from './styles.js';
+import styles from './styles.Home.js';
 
 import Newsfeed from '../Newsfeed/Newsfeed';
 

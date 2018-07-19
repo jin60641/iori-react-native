@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './styles.js';
+import styles from './styles.Start.js';
 import colors from '../../styles/colors';
 import {TouchableHighlight, TextInput, View, Text } from 'react-native';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './styles.js';
+import styles from './styles.Search.js';
 import colors from '../../styles/colors';
 //import { fetchSendSearch } from '../../actions/chat';
 import { TouchableHighlight, TextInput, View, Text } from 'react-native';

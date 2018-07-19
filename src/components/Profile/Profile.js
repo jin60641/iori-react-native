@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TouchableOpacity, Image, View, Text, Dimensions } from 'react-native';
-import { fetchSearchUserByHandle } from '../../actions/search';
 import config from '../../../config';
 const { host } = config;
+import { fetchSearchUserByHandle } from '../../actions/search';
 //import { fetchSetProfile } from '../../actions/setting';
 import { fetchFollow } from '../../actions/relation';
-import styles from './styles.js';
+import styles from './styles.Profile.js';
 import colors from '../../styles/colors';
 
 import TabView from 'react-native-scrollable-tab-view';
