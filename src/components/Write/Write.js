@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.Write.js';
 import { fetchWritePost } from '../../actions/newsfeed';
-import { KeyboardAvoidingView, TouchableHighlight, CameraRoll, Image, Keyboard, TextInput, View, Text, FlatList } from 'react-native';
+import { KeyboardAvoidingView, TouchableHighlight, CameraRoll, Image, TextInput, View, Text, FlatList } from 'react-native';
 import config from '../../../config';
 const { host } = config;
 const profile = require('../../images/profile.png');

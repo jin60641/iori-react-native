@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
 		flexDirection: 'row',
-		marginBottom : 12,
+		marginTop : 12,
 	},
 	body : {
 		width : '100%',

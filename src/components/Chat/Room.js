@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.Room.js';
 import colors from '../../styles/colors';
-import { fetchGetChats } from '../../actions/chat';
-import { FlatList, TextInput, View, Text } from 'react-native';
+import { fetchSendChat, fetchGetChats } from '../../actions/chat';
+import { KeyboardAvoidingView, View, FlatList, TextInput, Text } from 'react-native';
 
 import Form from './Form';
 import Message from './Message';
@@ -50,30 +50,57 @@ class Room extends Component {
 			passProps : { handle }
 		});
 	}
-	handleEndReached = () => {
+	handleEndReached = param => {
+		console.log("@@@@@@@@@@@" + JSON.stringify(param));
 		this.getChats();
+	}
+	handleSend = data => {
+		const { fetchSendChat, to, type } = this.props;
+		const { text } = this.state;
+		let formData = new FormData();
+		formData.append("to",to.id);
+		formData.append("type",type);
+		Object.keys(data).forEach( key => {
+			formData.append(key,data[key]);
+		});
+		fetchSendChat(formData)
+		.then( action => {
+			if( !action.error ){
+				this.list.scrollToOffset({ offset : 0, animated : false });
+			}
+		})
 	}
 	render(){
 		const { handle, chats, user } = this.props;
+		const { to, type } = this.props;
+		const data = chats[handle]?chats[handle].slice().reverse():[];
 		return(
-			<View style={styles.Room}>
+			<KeyboardAvoidingView 
+				style={styles.Room}
+				behavior="position"
+				enabled={true} 
+				keyboardVerticalOffset={64}
+			>  
 				<FlatList
-					inverted={true}
-					data={chats[handle]}
-					renderItem={ ({ item }) => <Message chat={item} handleTouchUser={this.handleTouchUser} user={user}/> }
+					inverted
+					style={styles.list}
+					data={data}
+					renderItem={ ({ item }) => <View style={styles.item}><Message chat={item} handleTouchUser={this.handleTouchUser} user={user}/></View> }
 					keyExtractor={ item => `Message-${item.id}` }
 					onEndReached={ this.handleEndReached.bind(this) }
 					onEndReachedThreshold={0.8}
+					ref={ dom => this.list = dom }
 				/>
-				<Form />
-			</View>
+				<Form handleSend={this.handleSend}/>
+			</KeyboardAvoidingView>
 		);
 	}
 }
 
 const stateToProps = ({chats,user}) => ({chats,user});
 const actionToProps = {
-	fetchGetChats,
+	fetchSendChat,
+	fetchGetChats
 };
 
 export default connect(stateToProps,actionToProps)(Room);

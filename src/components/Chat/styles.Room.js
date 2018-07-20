@@ -7,6 +7,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.white,
         flexDirection:'column',
+    },
+	list : {
 		padding : 10,
-    }
+		transform: [{ scaleY: -1 }]
+	},
+	item : {
+		transform: [{ scaleY: -1 }]
+	}
 });

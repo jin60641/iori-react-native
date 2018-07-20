@@ -5,15 +5,31 @@ export default StyleSheet.create({
 		width : '100%',
 		borderTopWidth : 1,
 		borderTopColor : colors.gray,
-		padding : 4,
-		height : 40,
+		padding : 10,
+		flexDirection : 'row'
     },
 	textarea : {
 		borderWidth : 1,
 		borderColor : colors.main,
-		width : '100%',
-		height : '100%',
-		fontSize : 15,
+		flex : 1,
+		fontSize : 16,
+		borderRadius : 4,
+		marginLeft : 10,
 		marginRight : 10,
+		paddingLeft : 5,
+		paddingRight : 5
+	},
+	send : {
+		backgroundColor : colors.main,
+		height : 30,
+		width : 44,
+		borderRadius : 4,
+		justifyContent : 'center',
+		alignItems : 'center',
+	},
+	sendText : {
+		color : colors.white,
+		fontSize : 16,
+		fontWeight : '700',
 	}
 });
