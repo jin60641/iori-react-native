@@ -40,12 +40,31 @@ export default StyleSheet.create({
 		color : colors.black,
 		fontSize : 13,
 	},
-	image : {
+	imageBox : {
 		width : '100%',
-		height : 200,
+		aspectRatio : 1,
+		flexDirection : 'row',
+	},
+	imageColumn : {
+		flex : 1,
+		flexDirection : 'column',
+	},
+	imageRow : {
+		flex : 1,
+		flexDirection : 'row',
+	},
+	image : {
+		flex : 1,
 		borderRadius : 3,
-		marginTop : 10,
 		borderWidth : 1,
-		borderColor : colors.gray
+		borderColor : colors.gray,
+		marginBottom : 10,
+		marginRight : 10,
+	},
+	imageRight : {
+		marginRight : 0
+	},
+	imageBottom : {
+		marginBottom : 0
 	}
 });

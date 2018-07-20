@@ -74,8 +74,8 @@ class Profile extends Component {
 			return null;
 		}
 		const my = user.verify && user.id === this.props.user.id;
-		const profileUri = user.profile ? { uri : `${host}/public/files/profile/${user.id}.png` }:require('../../images/profile.png');
-		const headerUri = { uri : `${host}/public/files/header/${user.id}.png` };
+		const profileUri = user.profile ? { uri : `${host}/files/profile/${user.id}.png` }:require('../../images/profile.png');
+		const headerUri = { uri : `${host}/files/header/${user.id}.png` };
 		return(
 			<View style={styles.Profile}>
 				<View style={styles.header}>

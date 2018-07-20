@@ -14,6 +14,13 @@ const getDialogsUri = `${host}/api/chat/getdialogs`;
 const sendChatUri = `${host}/api/chat/sendchat`;
 const makeGroupUri = `${host}/api/chat/makegroup`;
 
+export const chatSocket = (socket,dispatch) => {
+	socket.on( 'getchat', data => {
+		dispatch(getDialog(data));
+		dispatch(getChat(data));
+	})
+}
+
 export const fetchMakeGroup = data => {
 	return async (dispatch) => {
 		const resp = await fetch(makeGroupUri, {

@@ -6,6 +6,7 @@ import config from '../../../config';
 const { host } = config;
 
 const profile = require('../../images/profile.png');
+const maxRowCount = 2;
 class Post extends Component {
 	constructor(props) {
 		super(props);
@@ -33,7 +34,9 @@ class Post extends Component {
 	}
 	render() {
 		const { post, user, handleTouchUser } = this.props;
-		const profileUri = post.user.profile?{uri:`${host}/public/files/profile/${post.user.id}.png`}:profile;
+		const profileUri = post.user.profile?{uri:`${host}/files/profile/${post.user.id}.png`}:profile;
+		const columnCount = post.file===2?2:parseInt((post.file+1)/maxRowCount);
+		const odd = post.file%2;
 		return (
 			<View style={styles.Post}>
 				<TouchableOpacity
@@ -57,7 +60,25 @@ class Post extends Component {
 							{ post.text }
 					</Text>
 					{ post.file ?
-						<Image style={styles.image} source={{uri:`${host}/public/files/post/${post.id}/1.png`}} alt="post img" />
+						<View style={styles.imageBox}>
+						{ Array.from(Array(columnCount)).map( (column,i) => {
+							const rowCount = ((i===0&&odd)||post.file===2)?1:maxRowCount;
+							return(
+								<View style={styles.imageColumn} key={`Post-${post.id}-column-${i+1}`}> 
+								{ Array.from(Array(rowCount)).map( (row,j) => {
+									const number = i*rowCount+(j+1)+(i?(odd?-1:0):0);
+									return (
+										<Image 
+											style={[styles.image,((j+1)===rowCount)?styles.imageBottom:{},((i+1)===columnCount)?styles.imageRight:{}]} 
+											source={{uri:`${host}/files/post/${post.id}/${number}.png`}} 
+											key={`Post-${post.id}-image-${number}`} 
+										/>
+									);
+								})}
+								</View>
+							);
+						})}
+						</View>
 					: null
 					}
 				</View>

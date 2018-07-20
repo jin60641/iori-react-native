@@ -12,7 +12,7 @@ class Message extends Component {
 	render(){
 		const { user, chat } = this.props;
 		const my = user.id === chat.from.id;
-		const profileUri = chat.from.profile?{uri:`${host}/public/files/profile/${chat.from.id}.png`}:profile;
+		const profileUri = chat.from.profile?{uri:`${host}/files/profile/${chat.from.id}.png`}:profile;
 		return(
 			<View style={[styles.Message,my?styles.MessageMy:{}]}>
 				{ my ? null : 
@@ -28,7 +28,7 @@ class Message extends Component {
 					</Text>
 					{
 						chat.file ?
-							<Image style={styles.file} src={{ uri : `${host}/public/files/chat/${chat.id}.png` }} />
+							<Image style={styles.file} src={{ uri : `${host}/files/chat/${chat.id}.png` }} />
 						:
 							<View style={[styles.wrap,my?styles.my:styles.row]}>
 								<View style={[styles.caret,my?styles.caretMy:{}]}>

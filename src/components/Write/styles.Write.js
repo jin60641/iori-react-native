@@ -10,11 +10,10 @@ export default StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	body : {
-		flex : 1,
 		flexDirection : 'row',
 		padding : 15,
 		position : 'relative',
-		justifyContent:'center',
+		justifyContent: 'center',
 	},
 	profile : {
 		width : 40,
@@ -22,24 +21,8 @@ export default StyleSheet.create({
 		borderRadius : 20,
 		marginRight : 7
 	},
-	text : {	
+	textarea : {	
 		flex : 1,
 		fontSize : 20,
-	},
-	photos : {
-		height : 100,
-		paddingLeft : 5,
-		paddingRight : 5,
-	},
-	photosActive : {
-	},
-	photosNone : {
-		display : 'none',
-	},
-	photo : {
-		height : 80,
-		width : 80,
-		margin : 5,
-		borderRadius : 4
 	},
 });

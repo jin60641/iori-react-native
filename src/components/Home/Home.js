@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLogin } from '../../actions/auth';
+import { fetchConnectSocket } from '../../actions/socket';
 import { AsyncStorage, View } from 'react-native';
 import styles from './styles.Home.js';
 
@@ -23,14 +24,17 @@ class Home extends Component {
 		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
 	componentDidMount = async () => {
-		const { user, fetchLogin, navigator } = this.props;
+
+		const { user, fetchLogin, fetchConnectSocket, navigator } = this.props;
 		if( !user.verify ){
 			const email = await AsyncStorage.getItem('email');
 			const password = await AsyncStorage.getItem('password');
 			if( email && password ){
 				fetchLogin({ email, password })
 				.then( action => {
-					if( action.error ){
+					if( !action.error ){
+	                	fetchConnectSocket();
+					} else {
 						this.showStartModal();
 					}
 				});
@@ -94,6 +98,7 @@ class Home extends Component {
 
 const stateToProps = ({user}) => ({user});
 const actionToProps = {
-	fetchLogin
+	fetchLogin,
+	fetchConnectSocket,
 }
 export default connect(stateToProps,actionToProps)(Home);

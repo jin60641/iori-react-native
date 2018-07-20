@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.Write.js';
 import { fetchWritePost } from '../../actions/newsfeed';
-import { KeyboardAvoidingView, TouchableHighlight, CameraRoll, Image, TextInput, View, Text, FlatList } from 'react-native';
+import { KeyboardAvoidingView, Image, TextInput, View } from 'react-native';
+
 import config from '../../../config';
 const { host } = config;
+
+import Photo from './Photo';
 const profile = require('../../images/profile.png');
 
 const initialState = {
 	text : '',
-	files : [],
-	photos : []
+	files : []
 }
 
 class Write extends Component {
@@ -30,24 +32,16 @@ class Write extends Component {
 		const { navigator } = this.props;
 		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
-	componentDidMount = () => {
-		CameraRoll.getPhotos({
-			first : 20,
-			assetType: 'Photos'
-		})
-		.then( r => {
-			this.setState({
-				photos : r.edges
-			});
-		})
-		.catch( e => {
-			console.log(e);
-		});
-	}
 	onNavigatorEvent = e => {
-		switch(e.id){
-			case 'close' : this.handleTouchClose(); break;
-			case 'send' : this.handleTouchSend(); break;
+		console.log(e.type,e.id);
+		if( e.type === 'ScreenChangedEvent' ){
+			switch(e.id){
+			}
+		} else if( e.type === 'NavBarButtonPress' ){
+			switch(e.id){
+				case 'close' : this.handleTouchClose(); break;
+				case 'send' : this.handleTouchSend(); break;
+			}
 		}
 	}
 	handleTouchClose = () => {
@@ -55,6 +49,8 @@ class Write extends Component {
 		navigator.dismissModal({
 			animationType: 'slide-down'
 		});
+		this.setState({ ...initialState });
+		this.textarea.clear();
 	}
 	handleTouchSend = () => {
 		const { fetchWritePost } = this.props;
@@ -64,9 +60,7 @@ class Write extends Component {
 			return 0;
 		}
 		data.append("text",text);
-		Array.from(files).forEach( file => {
-			data.append('file',file.data);
-		})
+		files.forEach( uri => data.append('file',{type: "image/jpeg", name: uri, uri}));
 		fetchWritePost(data)
 		.then( action => {
 			if( !action.error ){
@@ -76,17 +70,20 @@ class Write extends Component {
 					link
 				});
 			} else {
-				
+				//
 			}
 		});
 	}
 	handleChangeText = text => {
 		this.setState({ text });
 	}
+	handleChangeFiles = files => {
+		this.setState({ files });
+	}
 	render() {
-		const { text, photos } = this.state;
 		const { user } = this.props;
-		const profileUri = user.profile?{uri:`${host}/public/files/profile/${user.id}.png`}:profile;
+		const { text, files } = this.state;
+		const profileUri = user.profile?{uri:`${host}/files/profile/${user.id}.png`}:profile;
 		return (
 			<KeyboardAvoidingView 
 				style={styles.Write} 
@@ -97,8 +94,9 @@ class Write extends Component {
 				<View style={styles.body}>
 					<Image style={styles.profile} source={profileUri} />
 					<TextInput 
+						ref={ dom => this.textarea = dom }
 						multiline={true} 
-						style={styles.text}
+						style={styles.textarea}
 						autoCapitalize='none'
 						autoCorrect={false}
 						autoFocus={true}
@@ -106,14 +104,7 @@ class Write extends Component {
 						placeholder='무슨 일이 일어나고 있나요?'
 					/>
 				</View>
-				<View style={[styles.photos,!text.length?styles.photosActive:styles.photosNone]}>
-					<FlatList
-						data={photos}
-						horizontal={true}
-						renderItem={ ({item }) => <Image source={{uri:item.node.image.uri}} style={styles.photo}/> }
-						keyExtractor={ item => `Write-photo-${item.node.image.uri}` }
-					/>
-				</View>
+				<Photo text={text} handleChangeFiles={this.handleChangeFiles} files={files}/>
 			</KeyboardAvoidingView>
 		);
 	}
