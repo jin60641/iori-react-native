@@ -18,6 +18,7 @@ import Search from './components/Search/Search';
 import Chat from './components/Chat/Chat';
 import Room from './components/Chat/Room';
 import Write from './components/Write/Write';
+import Viewer from './components/Viewer/Viewer';
 
 const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
@@ -32,6 +33,7 @@ add('Search',Search);
 add('Chat',Chat);
 add('Room',Room);
 add('Write',Write);
+add('Viewer',Viewer);
 
 Navigation.startTabBasedApp({
 	tabs: [

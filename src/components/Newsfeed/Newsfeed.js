@@ -67,7 +67,7 @@ class Newsfeed extends Component {
 		this.getPosts({ offset : 0, id });
 	}
 	render() {
-		const { user } = this.props;
+		const { user, navigator } = this.props;
 		const { posts, refreshing } = this.state;
 		/*
 		// by ScrollView
@@ -95,7 +95,7 @@ class Newsfeed extends Component {
 			<View style={styles.Newsfeed}>
 				<FlatList
 					data={posts}
-					renderItem={ ({item }) => <Post post={item} handleTouchUser={this.handleTouchUser}/> }
+					renderItem={ ({item }) => <Post post={item} handleTouchUser={this.handleTouchUser} navigator={navigator}/> }
 					keyExtractor={ item => `Post-${item.id}` }
 					onEndReached={ this.handleEndReached.bind(this) }
 					onEndReachedThreshold={0.8}

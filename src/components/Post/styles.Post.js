@@ -53,13 +53,17 @@ export default StyleSheet.create({
 		flex : 1,
 		flexDirection : 'row',
 	},
-	image : {
+	imageWrap : {
 		flex : 1,
 		borderRadius : 3,
 		borderWidth : 1,
 		borderColor : colors.gray,
 		marginBottom : 10,
 		marginRight : 10,
+	},
+	image : {
+		width : '100%',
+		height : '100%'
 	},
 	imageRight : {
 		marginRight : 0

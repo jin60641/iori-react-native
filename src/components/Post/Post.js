@@ -4,12 +4,21 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles.Post.js';
 import config from '../../../config';
 const { host } = config;
+import Viewer from '../Viewer/Viewer';
 
 const profile = require('../../images/profile.png');
 const maxRowCount = 2;
+
+const initialState = { 
+	viewer : -1
+}
+
+
 class Post extends Component {
 	constructor(props) {
 		super(props);
+		const { post } = this.props;
+		this.state = { ...initialState, images : Array.from(Array(post.file)).map( (x,i) => `${host}/files/post/${post.id}/${i+1}.png`) }
 	}
 	getDateString(str){
 		let date = new Date(str);
@@ -32,13 +41,25 @@ class Post extends Component {
 			}
 		}
 	}
+	handleTouchImage = num => {
+		this.setState({
+			viewer : num
+		});
+	}
+	handleCloseViewer = () => {
+		this.setState({
+			viewer : -1
+		});
+	}
 	render() {
 		const { post, user, handleTouchUser } = this.props;
+		const { images, viewer } = this.state;
 		const profileUri = post.user.profile?{uri:`${host}/files/profile/${post.user.id}.png`}:profile;
-		const columnCount = post.file===2?2:parseInt((post.file+1)/maxRowCount);
+		const columnCount = parseInt((post.file+1)/maxRowCount);
 		const odd = post.file%2;
 		return (
 			<View style={styles.Post}>
+				<Viewer id={`post-${post.id}`} index={viewer} images={images} handleCloseViewer={this.handleCloseViewer}/>
 				<TouchableOpacity
 					onPress={()=>handleTouchUser(post.user.handle)}
 				> 
@@ -62,17 +83,23 @@ class Post extends Component {
 					{ post.file ?
 						<View style={styles.imageBox}>
 						{ Array.from(Array(columnCount)).map( (column,i) => {
-							const rowCount = ((i===0&&odd)||post.file===2)?1:maxRowCount;
+							const rowCount = (i===0&&odd)?1:maxRowCount;
 							return(
 								<View style={styles.imageColumn} key={`Post-${post.id}-column-${i+1}`}> 
 								{ Array.from(Array(rowCount)).map( (row,j) => {
-									const number = i*rowCount+(j+1)+(i?(odd?-1:0):0);
+									const index = i*rowCount+j+(i?(odd?-1:0):0);
 									return (
-										<Image 
-											style={[styles.image,((j+1)===rowCount)?styles.imageBottom:{},((i+1)===columnCount)?styles.imageRight:{}]} 
-											source={{uri:`${host}/files/post/${post.id}/${number}.png`}} 
-											key={`Post-${post.id}-image-${number}`} 
-										/>
+										<TouchableOpacity
+											key={`Post-${post.id}-image-${index+1}`} 
+											onPress={()=>this.handleTouchImage(index)}
+											activeOpacity={1}
+											style={[styles.imageWrap,((j+1)===rowCount)?styles.imageBottom:{},((i+1)===columnCount)?styles.imageRight:{}]} 
+										>
+											<Image
+												style={styles.image}
+												source={{uri:images[index]}} 
+											/>
+										</TouchableOpacity>
 									);
 								})}
 								</View>
