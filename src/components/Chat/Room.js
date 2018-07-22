@@ -56,7 +56,6 @@ class Room extends Component {
 	}
 	handleSend = data => {
 		const { fetchSendChat, to, type } = this.props;
-		const { text } = this.state;
 		let formData = new FormData();
 		formData.append("to",to.id);
 		formData.append("type",type);

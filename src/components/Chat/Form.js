@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import styles from './styles.Form.js';
-import { connect } from 'react-redux';
-import colors from '../../styles/colors';
-import { fetchSendChat } from '../../actions/chat';
 import { TouchableOpacity, FlatList, TextInput, View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
+
+import { fetchSendChat } from '../../actions/chat';
+
+import styles from './styles.Form.js';
+import colors from '../../styles/colors';
 
 const initialState = {
 	text : ''
@@ -16,11 +19,16 @@ class Form extends Component {
 		super(props);
 		this.state = { ...initialState };
 	}
-	handleChangeFile = e => {
-		const { files } = e.target;
+	handleTouchFile = () => {
 		const { handleSend } = this.props;
-		Array.from(files).forEach( file => {
-			handleSend({ file, text : "" });
+		ImagePicker.openPicker({
+			multiple : false
+        })
+		.then( image => {
+			handleSend({ file : { type : "image/jpeg", name : image.sourceURL, uri : image.sourceURL } });
+		})
+		.catch( e => {
+			console.log(e);
 		});
 	}
 	handleChangeText = text => {
@@ -42,7 +50,7 @@ class Form extends Component {
 		return(
 			<View style={styles.Form}>
 				<TouchableOpacity
-					onPress={this.handleChangeFile}
+					onPress={this.handleTouchFile}
 					style={styles.send}
 				>
 					<Text style={styles.sendText}>

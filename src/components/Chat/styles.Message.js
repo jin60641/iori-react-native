@@ -10,7 +10,6 @@ export default StyleSheet.create({
 		marginTop : 12,
 	},
 	body : {
-		width : '100%',
 	},
 	row : {
 		flexDirection: 'row',
@@ -25,6 +24,11 @@ export default StyleSheet.create({
 	MessageMy : {
 		justifyContent: 'flex-end',
 		alignItems: 'flex-end',
+	},
+	profile : {
+		width : 40,
+		height : 40,
+		borderRadius : 20,
 	},
 	name : {
 		marginRight : 6
@@ -75,10 +79,16 @@ export default StyleSheet.create({
 	caretOuterMy : {
 		borderRightWidth : 10,
 	},
-	text : {
+	content : {
 		borderWidth : 1,
 		borderColor : colors.main,
-		padding : 10,
+		borderRadius : 4,
+	},
+	text : {
+		margin : 10,
+	},
+	file : { 
+		margin : 2,
 		borderRadius : 4,
 	}
 });
