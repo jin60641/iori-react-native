@@ -19,6 +19,8 @@ import Chat from './components/Chat/Chat';
 import Room from './components/Chat/Room';
 import Write from './components/Write/Write';
 import Viewer from './components/Viewer/Viewer';
+import Notice from './components/Notice/Notice';
+import Setting from './components/Setting/Setting';
 
 const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
@@ -34,6 +36,8 @@ add('Chat',Chat);
 add('Room',Room);
 add('Write',Write);
 add('Viewer',Viewer);
+add('Notice',Notice);
+add('Setting',Setting);
 
 Navigation.startTabBasedApp({
 	tabs: [
@@ -59,6 +63,12 @@ Navigation.startTabBasedApp({
 			icon: require('./images/tab-search.png'), 
 			//selectedIcon: require('./images/one-active.png'),
 		},
+		{
+			label: 'Notice',
+			screen: 'Notice',
+			title : '알림',
+			icon: require('./images/tab-search.png'), 
+		}
 	],
 	tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
 		tabBarTranslucent : false,

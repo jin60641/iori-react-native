@@ -43,6 +43,9 @@ export default StyleSheet.create({
 		color : colors.gray
 	},
 	dialogActive : {
-		color : colors.white
+		color : colors.white,
+	},
+	DialogActive : {
+		backgroundColor : colors.main
 	}
 });

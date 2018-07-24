@@ -33,14 +33,15 @@ class Dialog extends Component {
 		const to = dialog.type==="user"?dialog.to:dialog.group;
 		const from = dialog.type==="user"?dialog.from:dialog.group;
 		const profileUri = my?require('../../images/profile.png'):require('../../images/profile.png');
+		const text = dialog.file?'사진':dialog.text;
 		return (
 			<TouchableHighlight
-				style={ styles.Dialog }
+				style={[styles.Dialog,pressed?styles.DialogActive:{}]}
 				onPressIn={(() => this.press(dialog.id)).bind(this)}
 				onPressOut={(() => this.press(null)).bind(this)}
-				underlayColor={colors.main}
 				activeOpacity={1}
 				onPress={ (()=>openChat(my?to:from,dialog.type)).bind(this) }
+				underlayColor={colors.white}
 			>
 				<View style={ styles.dialogView }>
 					<Text style={styles.dialogTime}>
@@ -52,7 +53,7 @@ class Dialog extends Component {
 							{ my ? to.name : from.name }
 						</Text>
 						<Text style={[styles.dialogText,pressed?styles.dialogActive:{}]}>
-							{ my ? `나 : ${dialog.text}`  : dialog.text }
+							{ my ? `나 : ${text}` : text }
 						</Text>
 					</View>
 				</View>

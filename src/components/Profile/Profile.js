@@ -4,7 +4,6 @@ import { TouchableOpacity, Image, View, Text, Dimensions } from 'react-native';
 import config from '../../../config';
 const { host } = config;
 import { fetchSearchUserByHandle } from '../../actions/search';
-//import { fetchSetProfile } from '../../actions/setting';
 import { fetchFollow } from '../../actions/relation';
 import styles from './styles.Profile.js';
 import colors from '../../styles/colors';
@@ -26,6 +25,9 @@ class Profile extends Component {
 		const { user, handle } = this.props;
 		this.state = { ...initialState, user : handle?null:user };
 	}
+	static navigatorStyle = {
+		navBarHidden: true 
+	}
 	componentDidMount = () => {
 		const { handle, fetchSearchUserByHandle } = this.props;
 		if( !handle ) return null;
@@ -38,33 +40,21 @@ class Profile extends Component {
 			}
 		});
 	}
-	/*
-	handleTouchSetting = type => {
-		this.setState({
-			isSetting : type
+	handleTouchSetting = () => {
+		const { navigator } = this.props;
+		navigator.showModal({
+			screen : 'Setting',
+			title : '설정',
+			animationType : 'slide-down'
 		});
 	}
-	handleTouchSettingSave = type => {
-		fetchSetProfile(formData)
-		.then( action => {
-			if( !action.error ){
-				if( action.payload ){
-					const nextState = { user : this.state.user };
-					nextState.user[type] = action.payload[type];
-					this.setState(nextState);
-					this.handleTouchSetting(null);
-				}
-			}
-		});
-	}
-	*/
 	handleTouchFollow = () => {
 		const { fetchFollow } = this.props;
-		fetchFollow({ to : this.state.user.id })
+		const { user } = this.state;
+		fetchFollow({ to : user.id })
 		.then( action => {
-			const nextState = { ...this.state };
-			nextState.user.following = action.payload;
-			this.setState(nextState);
+			console.log(action.payload + "@@@");
+			this.setState({ user : { ...user, following : action.payload } });
 		});
 	}
 	render(){
@@ -73,25 +63,34 @@ class Profile extends Component {
 		if( !user ){
 			return null;
 		}
-		const my = user.verify && user.id === this.props.user.id;
+		const my = ( this.props.user.verify && user.id === this.props.user.id );
 		const profileUri = user.profile ? { uri : `${host}/files/profile/${user.id}.png` }:require('../../images/profile.png');
 		const headerUri = { uri : `${host}/files/header/${user.id}.png` };
 		return(
 			<View style={styles.Profile}>
-				<View style={styles.header}>
-					{ user.header ? <Image source={ headerUri } style={styles.headerImg} /> : null }
-				</View>
+				{ user.header ?
+					<Image source={ headerUri } style={[styles.header,styles.headerImg]} />
+					: <View style={[styles.header,styles.headerNone]} />
+				}
 				<View style={styles.container}>
 					<Image source={ profileUri } style={styles.profileImg}/>
-					{ my ? 
+					{ my ?
 						<View style={styles.buttons}>
-							<View>
-							</View>
+							<TouchableOpacity
+								onPress={this.handleTouchSetting.bind(this)}
+								style={styles.button}
+							>
+								<Image style={styles.buttonIcon} source={require('../../images/setting.png')}/>
+							</TouchableOpacity>
 						</View>
 						:
 						<View style={styles.buttons}>
-							<View>
-							</View>
+							<TouchableOpacity
+								onPress={this.handleTouchFollow.bind(this)}
+								style={[styles.button,styles.follow]}
+							>
+								<Text style={styles.buttonText}>{user.following?'언팔로우':'팔로잉'}</Text>
+							</TouchableOpacity>
 						</View>
 					}
 				</View>
@@ -122,7 +121,6 @@ class Profile extends Component {
 const stateToProps = ({searched,user}) => ({searched,user});
 const actionToProps = {
 	fetchSearchUserByHandle,
-//	fetchSetProfile,
 	fetchFollow,
 }
 

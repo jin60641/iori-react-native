@@ -24,7 +24,6 @@ class Home extends Component {
 		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
 	componentDidMount = async () => {
-
 		const { user, fetchLogin, fetchConnectSocket, navigator } = this.props;
 		if( !user.verify ){
 			const email = await AsyncStorage.getItem('email');

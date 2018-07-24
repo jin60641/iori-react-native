@@ -18,6 +18,7 @@ const strToChar = {
 }
 
 const initialState = {
+	init : false
 }
 
 const limit = 10;
@@ -26,12 +27,24 @@ class Chat extends Component {
 	constructor(props){
 		super(props);
 		this.state = { ...initialState }
+        const { navigator } = this.props;
+        navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+    onNavigatorEvent = e => {
+		const { init } = this.state;
+		const { user } = this.props;
+        if( e.type === 'ScreenChangedEvent' && e.id === 'willAppear' && !this.state.init && user.verify ){
+			this.init();
+		}
 	}
 	getFullHandle = (type,handle) => {
 		return strToChar[type] + handle;
 	}
-	componentDidMount = () => {
+	init = () => {
 		const { fetchGetDialogs, handle } = this.props;
+		this.setState({
+			init : true
+		});
 		fetchGetDialogs()
 		.then( action => {
 			if( handle ){

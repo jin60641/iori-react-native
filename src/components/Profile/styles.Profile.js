@@ -6,13 +6,13 @@ export default StyleSheet.create({
 		backgroundColor : colors.white
 	},
 	header : {
-		height : 120,
+		height : 140,
 		width : '100%',
+	},
+	headerNone : {
 		backgroundColor : colors.main
 	},
 	headerImg : {
-		width : '100%',
-		height : '100%',
 		resizeMode : 'cover'
 	},
 	container : {
@@ -41,4 +41,35 @@ export default StyleSheet.create({
 		fontSize : 12,
 		color : colors.gray
 	},
+	buttons : {
+		justifyContent : 'flex-end',
+		alignItems : 'flex-end',
+		flexDirection : 'row',
+		marginTop : 8,
+	},
+	button : {
+		marginRight : 8,
+		borderWidth : 1,
+		borderColor : colors.main,
+		height : 26,
+		borderRadius : 13,
+		justifyContent : 'center',
+		alignItems : 'center',
+		
+	},
+	follow : {
+		width : 80,
+	},
+	buttonIcon : {
+		marginLeft : 5,
+		marginRight : 5,
+		width : 15,
+		height : 15,
+	},
+	buttonText : {
+		marginLeft : 10,
+		marginRight : 10,
+		fontSize : 12,
+		color : colors.main
+	}
 });

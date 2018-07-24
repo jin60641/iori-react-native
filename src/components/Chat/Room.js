@@ -46,7 +46,6 @@ class Room extends Component {
 		const { navigator } = this.props;
 		navigator.push({
 			screen: 'Profile',
-			title: '프로필',
 			passProps : { handle }
 		});
 	}

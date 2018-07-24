@@ -33,7 +33,6 @@ class Write extends Component {
 		navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 	}
 	onNavigatorEvent = e => {
-		console.log(e.type,e.id);
 		if( e.type === 'ScreenChangedEvent' ){
 			switch(e.id){
 			}
