@@ -19,7 +19,10 @@ export default StyleSheet.create({
 	},
 	inform : {
 		flexDirection : 'row',
-		alignItems : 'baseline',
+		alignItems: 'flex-start',
+	},
+	touch : {
+		marginTop : 2
 	},
 	name : {
 		fontSize : 13,
@@ -36,7 +39,6 @@ export default StyleSheet.create({
 		flexDirection : 'column',
 	},
 	text : {
-		marginTop : 4,
 		width : '100%',
 		color : colors.black,
 		fontSize : 13,

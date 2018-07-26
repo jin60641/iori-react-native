@@ -80,10 +80,17 @@ class Setting extends Component {
 	}
 	handleTouchPick = type => {
 		ImagePicker.openPicker({
-			crop : true
+			cropping : true,
+			cropperCircleOverlay : type==='profile',
+			loadingLabelText : '편집',
+			cropperChooseText : '선택',
+			cropperCancelText  : '취소',
+			avoidEmptySpaceAroundImage : false,
+			enableRotationGesture : true,
+			
         })
         .then(image => {
-			this.setState({ [type] : image.sourceURL });
+			this.setState({ [type] : image.path });
         })
         .catch( e => {
             console.log(e);

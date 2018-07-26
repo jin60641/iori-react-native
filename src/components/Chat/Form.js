@@ -25,7 +25,7 @@ class Form extends Component {
 			multiple : false
         })
 		.then( image => {
-			handleSend({ file : { type : "image/jpeg", name : image.sourceURL, uri : image.sourceURL } });
+			handleSend({ file : { type : "image/jpeg", name : image.path, uri : image.path } });
 		})
 		.catch( e => {
 			console.log(e);

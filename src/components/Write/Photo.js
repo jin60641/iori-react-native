@@ -36,7 +36,7 @@ class Photo extends Component {
 			maxFiles : maxFileCount-files.length,
 		})
 		.then(images => {
-			handleChangeFiles(files.concat(images.map(image => image.sourceURL)));
+			handleChangeFiles(files.concat(images.map(image => image.path)));
 		})
 		.catch( e => {
 			console.log(e);

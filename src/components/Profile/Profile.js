@@ -45,18 +45,20 @@ class Profile extends Component {
 		navigator.showModal({
 			screen : 'Setting',
 			title : '설정',
-			animationType : 'slide-down'
+			animationType : 'slide-down',
+			passProps : {
+				settingSave : this.settingSave
+			}
 		});
 	}
 	settingSave = payload => {
-		this.setState( user => ({ user : { ...user, ...payload } }) );
+		this.setState( state => ({ user : { ...state.user, ...payload } }) );
 	}
 	handleTouchFollow = () => {
 		const { fetchFollow } = this.props;
 		const { user } = this.state;
 		fetchFollow({ to : user.id })
 		.then( action => {
-			console.log(action.payload + "@@@");
 			this.setState({ user : { ...user, following : action.payload } });
 		});
 	}
