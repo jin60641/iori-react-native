@@ -27,16 +27,7 @@ class Chat extends Component {
 	constructor(props){
 		super(props);
 		this.state = { ...initialState }
-        const { navigator } = this.props;
-        navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
-    onNavigatorEvent = e => {
-		const { init } = this.state;
-		const { user } = this.props;
-        if( e.type === 'ScreenChangedEvent' && e.id === 'willAppear' && !this.state.init && user.verify ){
-			this.init();
-		}
-	}
 	getFullHandle = (type,handle) => {
 		return strToChar[type] + handle;
 	}
@@ -53,8 +44,11 @@ class Chat extends Component {
 		});
 	}
 	componentDidUpdate = (prevProps, prevState) => {
-		const { handle } = this.props;
-		const { to } = this.state;
+		const { handle, user } = this.props;
+		const { to, init } = this.state;
+		if( !this.state.init && user.verify ){
+			this.init();
+		}
 		if( ( !handle && to && to.handle ) || ( handle && to && handle.substr(1) !== to.handle ) ){
 			this.handleChangeTo(handle);
 		}

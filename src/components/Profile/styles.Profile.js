@@ -31,7 +31,11 @@ export default StyleSheet.create({
 		marginLeft : 10
 	},
 	info : {
-		padding : 15
+		padding : 15,
+	},
+	tabBar : {
+		marginTop : 0,
+		paddingTop : 10,
 	},
 	name : {
 		fontSize : 20,
@@ -40,6 +44,10 @@ export default StyleSheet.create({
 	handle : {
 		fontSize : 12,
 		color : colors.gray
+	},
+	introduce : {
+		marginTop : 10,
+		fontSize : 16,
 	},
 	buttons : {
 		justifyContent : 'flex-end',

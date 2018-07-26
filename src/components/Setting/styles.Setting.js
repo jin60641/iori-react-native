@@ -30,4 +30,33 @@ export default StyleSheet.create({
 		marginTop : -40,
 		marginLeft : 10
 	},
+	form : {
+		marginTop : 10,
+		borderTopWidth : 1,
+		borderTopColor : colors.gray
+	},
+	row : {
+		padding : 13,
+		flexDirection : 'row',
+        justifyContent: 'center',
+		borderBottomWidth : 1,
+		borderBottomColor : colors.gray
+	},
+	label : {
+		width : 80,
+		fontSize : 18,
+		fontWeight : '700',
+	},
+	input : {
+		padding : 0,
+		margin : 0,
+		flex : 1,
+		fontSize : 17,
+		fontWeight : 'normal',
+		height : 20,
+	},
+	introduce : {
+		marginTop : -6,
+		height : 100,
+	}
 });

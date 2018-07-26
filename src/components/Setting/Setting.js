@@ -5,9 +5,14 @@ import { connect } from 'react-redux';
 import config from '../../../config';
 const { host } = config;
 import { fetchSetProfile } from '../../actions/setting';
+import ImagePicker from 'react-native-image-crop-picker';
 import { Image, TouchableOpacity, TextInput, View, Text } from 'react-native';
 
 const initialState = {
+	profile : null,
+	header : null,
+	name : null,
+	introduce : null
 };
 class Setting extends Component {
 	static navigatorButtons = {
@@ -35,13 +40,32 @@ class Setting extends Component {
 		}
 	}
 	handleTouchSave = () => {
-		const { fetchSetProfile } = this.props;
+		const { fetchSetProfile, settingSave } = this.props;
+		const { profile, header, name, introduce } = this.state;
 		const formData = new FormData();
+		if( profile ) {
+			formData.append('profile',{ type : "image/jpeg", name : 'profile', uri : profile });
+			formData.append('profile[crop]',false);
+		} else if( profile !== initialState.profile ){
+			formData.append('profile[remove]',true);
+		}
+		if( header ) {
+			formData.append('header',{ type : "image/jpeg", name : 'header', uri : header });
+			formData.append('header[crop]',false);
+		} else if( header !== initialState.header ){
+			formData.append('header[remove]',true);
+		}
+		if( name ) {
+			formData.append('name',name);
+		}
+		if( introduce ) {
+			formData.append('introduce',introduce);
+		}
 		fetchSetProfile(formData)
 		.then( action => {
 			if( !action.error ){
 				if( action.payload ){
-					this.setState( user => ({ user : { ...user, ...action.payload } }) );
+					settingSave(action.payload);
 					this.handleTouchCancel();
 				}
 			}
@@ -54,17 +78,65 @@ class Setting extends Component {
 		});
 		this.setState({ ...initialState });
 	}
+	handleTouchPick = type => {
+		ImagePicker.openPicker({
+			crop : true
+        })
+        .then(image => {
+			this.setState({ [type] : image.sourceURL });
+        })
+        .catch( e => {
+            console.log(e);
+        });
+	}
+	handleChangeText = (key,value) => {
+		this.setState({ [key] : value });
+	}
 	render(){
 		const { user } = this.props;
-		const profileUri = user.profile ? { uri : `${host}/files/profile/${user.id}.png` }:require('../../images/profile.png');
-		const headerUri = { uri : `${host}/files/header/${user.id}.png` };
+		const { profile, header } = this.state;
+		const profileUri = profile ? { uri : profile } : ( user.profile?{ uri : `${host}/files/profile/${user.id}.png` }:require('../../images/profile.png') );
+		const headerUri = { uri : header?header:`${host}/files/header/${user.id}.png` };
 		return(
 			<View style={styles.Setting}>
-				<View style={styles.header}>
+				<TouchableOpacity 
+					style={styles.header}
+					onPress={(()=>this.handleTouchPick('header')).bind(this)}
+					activeOpacity={1}
+				>
 					{ user.header ? <Image source={ headerUri } style={styles.headerImg} /> : null }
-				</View>
-				<View style={styles.container}>
+				</TouchableOpacity>
+				<TouchableOpacity 
+					style={styles.container}
+					onPress={(()=>this.handleTouchPick('profile')).bind(this)}
+					activeOpacity={1}
+				>
 					<Image source={ profileUri } style={styles.profileImg}/>
+				</TouchableOpacity>
+				<View style={styles.form}>
+					<View style={styles.row}>
+						<Text style={styles.label}>이름</Text>
+						<TextInput 
+							style={styles.input}
+							placeholder='이름을 입력해주세요'
+							defaultValue={user.name} 
+							autoCapitalize='none'
+	                        autoCorrect={false}
+                        	onChangeText={(text=>this.handleChangeText('name',text)).bind(this)}
+						/>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.label}>자기소개</Text>
+						<TextInput 
+							style={[styles.input,styles.introduce]}
+							placeholder='자기소개를 입력해주세요'
+							defaultValue={user.introduce} 
+							autoCapitalize='none'
+	                        autoCorrect={false}
+							multiline={true}
+                        	onChangeText={(text=>this.handleChangeText('introduce',text)).bind(this)}
+						/>
+					</View>
 				</View>
 			</View>
 		);

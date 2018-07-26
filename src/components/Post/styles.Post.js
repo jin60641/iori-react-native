@@ -36,9 +36,11 @@ export default StyleSheet.create({
 		flexDirection : 'column',
 	},
 	text : {
+		marginTop : 4,
 		width : '100%',
 		color : colors.black,
 		fontSize : 13,
+		marginBottom : 10,
 	},
 	imageBox : {
 		width : '100%',
@@ -55,15 +57,15 @@ export default StyleSheet.create({
 	},
 	imageWrap : {
 		flex : 1,
-		borderRadius : 3,
-		borderWidth : 1,
-		borderColor : colors.gray,
 		marginBottom : 10,
 		marginRight : 10,
 	},
 	image : {
 		width : '100%',
-		height : '100%'
+		height : '100%',
+		borderRadius : 6,
+		borderWidth : 1,
+		borderColor : colors.gray,
 	},
 	imageRight : {
 		marginRight : 0

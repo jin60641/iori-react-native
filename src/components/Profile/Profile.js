@@ -48,6 +48,9 @@ class Profile extends Component {
 			animationType : 'slide-down'
 		});
 	}
+	settingSave = payload => {
+		this.setState( user => ({ user : { ...user, ...payload } }) );
+	}
 	handleTouchFollow = () => {
 		const { fetchFollow } = this.props;
 		const { user } = this.state;
@@ -97,12 +100,14 @@ class Profile extends Component {
 				<View style={styles.info}>
 					<Text style={styles.name}>{user.name}</Text>
 					<Text style={styles.handle}>@{user.handle}</Text>
+					<Text style={styles.introduce}>{user.introduce}</Text>
 				</View>
 				<TabView
 					tabBarActiveTextColor={colors.main}
 					locked={true}
 					renderTabBar={() => 
 						<TabBar 
+							style={styles.tabBar}
 							underlineColor={colors.main} 
 							tabStyles={{tab:{width:width/3}}} 
 							tabMargin={0.00001}
