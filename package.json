@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "prop-types": "*",
-    "react": "16.0.0-alpha.6",
-    "react-native": "0.44.2",
+    "react": "^16.5.2",
+    "react-native": "^0.57.3",
     "react-native-image-crop-picker": "^0.20.3",
     "react-native-image-zoom-viewer": "^2.2.13",
     "react-native-navigation": "1.x.x",
