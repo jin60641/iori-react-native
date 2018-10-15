@@ -1,7 +1,7 @@
 import {handleActions} from 'redux-actions';
 import {login,logout,join} from '../actions/auth';
 //import {follow} from '../actions/relation';
-//import {setProfile} from '../actions/setting';
+import {setProfile} from '../actions/setting';
 
 const initialState = {};
 
@@ -24,13 +24,13 @@ export default handleActions({
         }
         return null;
     },
-/*
 	[setProfile]: (state, action) => {
 		if( action.error ) {
 			return state;
 		}
-		return Object.assign(state,action.payload);
+		return { ...state, ...action.payload };
 	},
+/*
 	[follow]: (state, action) => {
 		if( action.error ) {
 			return state;

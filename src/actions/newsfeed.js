@@ -7,9 +7,9 @@ export const getPosts = createAction('GETPOSTS');
 export const getPost = createAction('GETPOST');
 export const removePost = createAction('REMOVEPOSTS');
 
-const writePostUri = `${host}/api/newsfeed/writepost`;
-const getPostsUri = `${host}/api/newsfeed/getposts`;
-const removePostUri = `${host}/api/newsfeed/removepost`;
+const writePostUri = `${host}/api/newsfeed/post/write`;
+const getPostsUri = `${host}/api/newsfeed/post/get`;
+const removePostUri = `${host}/api/newsfeed/post/remove`;
 
 export const fetchRemovePost = (data) => {
 	return async (dispatch) => {

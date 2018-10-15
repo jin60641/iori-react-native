@@ -50,7 +50,6 @@ class Room extends Component {
 		});
 	}
 	handleEndReached = param => {
-		console.log("@@@@@@@@@@@" + JSON.stringify(param));
 		this.getChats();
 	}
 	handleSend = data => {

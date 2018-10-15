@@ -21,7 +21,7 @@ class Newsfeed extends Component {
 	constructor(props){
 		super(props);
 		this.state = { ...initialState }
-    }
+  }
 	getPosts = (options = {}) => {
 		const { loading, posts } = this.state;
 		if( loading ) return false;
@@ -36,7 +36,7 @@ class Newsfeed extends Component {
 				this.setState({
 					loading: false,
 					refreshing: false,
-					posts : data.id?action.payload.concat(posts):posts.concat(action.payload)
+					posts : data.id?action.payload.posts.concat(posts):posts.concat(action.payload.posts)
 				});
 			}	 
 		}); 
@@ -63,7 +63,7 @@ class Newsfeed extends Component {
 	handleRefresh = () => {
 		const { posts } = this.state;
 		const id = posts[0]?posts[0].id:0;
-		this.getPosts({ offset : 0, id });
+		this.getPosts({ offset : 0, id, gt : true });
 	}
 	render() {
 		const { user, navigator } = this.props;
@@ -94,7 +94,7 @@ class Newsfeed extends Component {
 			<View style={styles.Newsfeed}>
 				<FlatList
 					data={posts}
-					renderItem={ ({item }) => <Post post={item} handleTouchUser={this.handleTouchUser} navigator={navigator}/> }
+					renderItem={ ({item}) => <Post post={item} handleTouchUser={this.handleTouchUser} navigator={navigator}/> }
 					keyExtractor={ item => `Post-${item.id}` }
 					onEndReached={ this.handleEndReached.bind(this) }
 					onEndReachedThreshold={0.8}

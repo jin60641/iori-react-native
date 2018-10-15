@@ -15,12 +15,12 @@ const searchFollowsUri = `${host}/api/search/follows`;
 export const fetchSearchFollows = (data) => {
 	return async (dispatch) => {
 		const resp = await fetch(searchFollowsUri, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(data),
+		  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(data),
 			credentials: 'include'
 		});
 		const body = await resp.json();
@@ -35,12 +35,12 @@ export const fetchSearchFollows = (data) => {
 export const fetchSearchGroup = (data) => {
 	return async (dispatch) => {
 		const resp = await fetch(searchGroupUri, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(data),
+		  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+		  },
+		  method: 'POST',
+		  body: JSON.stringify(data),
 			credentials: 'include'
 		});
 		const body = await resp.json();
@@ -55,12 +55,12 @@ export const fetchSearchGroup = (data) => {
 export const fetchSearchUserByHandle = (data) => {
 	return async (dispatch) => {
 		const resp = await fetch(searchUserByHandleUri, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(data),
+		  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+		  },
+		  method: 'POST',
+		  body: JSON.stringify(data),
 			credentials: 'include'
 		});
 		const body = await resp.json();
@@ -75,12 +75,12 @@ export const fetchSearchUserByHandle = (data) => {
 export const fetchSearchUsers = (data) => {
 	return async (dispatch) => {
 		const resp = await fetch(searchUsersUri, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(data),
+		  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+		  },
+		  method: 'POST',
+		  body: JSON.stringify(data),
 			credentials: 'include'
 		});
 		const body = await resp.json();

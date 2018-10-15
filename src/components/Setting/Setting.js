@@ -8,6 +8,8 @@ import { fetchSetProfile } from '../../actions/setting';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Image, TouchableOpacity, TextInput, View, Text } from 'react-native';
 
+const defaultProfile = require('../../images/profile.png');
+
 const initialState = {
 	profile : null,
 	header : null,
@@ -90,6 +92,7 @@ class Setting extends Component {
 			
         })
         .then(image => {
+      console.log(type,image.path,"!@#$");
 			this.setState({ [type] : image.path });
         })
         .catch( e => {
@@ -102,7 +105,7 @@ class Setting extends Component {
 	render(){
 		const { user } = this.props;
 		const { profile, header } = this.state;
-		const profileUri = profile ? { uri : profile } : ( user.profile?{ uri : `${host}/files/profile/${user.id}.png` }:require('../../images/profile.png') );
+		const profileUri = profile ? { uri : profile } : ( user.profile ? { uri : `${host}/files/profile/${user.id}.png` } : defaultProfile );
 		const headerUri = { uri : header?header:`${host}/files/header/${user.id}.png` };
 		return(
 			<View style={styles.Setting}>
@@ -111,7 +114,7 @@ class Setting extends Component {
 					onPress={(()=>this.handleTouchPick('header')).bind(this)}
 					activeOpacity={1}
 				>
-					{ user.header ? <Image source={ headerUri } style={styles.headerImg} /> : null }
+				  <Image source={ headerUri } style={styles.headerImg} />
 				</TouchableOpacity>
 				<TouchableOpacity 
 					style={styles.container}

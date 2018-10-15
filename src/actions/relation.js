@@ -9,12 +9,12 @@ const followUri = `${host}/api/relation/follow`;
 export const fetchFollow = (data) => {
 	return async (dispatch) => {
 		const resp = await fetch(followUri, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(data),
+		  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+		  },
+		  method: 'POST',
+		  body: JSON.stringify(data),
 			credentials: 'include'
 		});
 		const body = await resp.json();

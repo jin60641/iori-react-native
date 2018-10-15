@@ -76,8 +76,7 @@ class Photo extends Component {
 	}
 	render(){
 		const { photos } = this.state;
-		const { text, files } = this.props;
-		console.log(files);
+		const { text, files, handleChangeFiles } = this.props;
 		if( files.length ){
 			return (
 				<FlatList
@@ -96,7 +95,14 @@ class Photo extends Component {
 						data={photos}
 						horizontal={true}
 						showsHorizontalScrollIndicator={false}
-						renderItem={ ({item }) => <Image source={{uri:item.node.image.uri}} style={styles.item}/> }
+						renderItem={ ({item}) => (
+							<TouchableOpacity
+								style={styles.item}
+								onPress={()=>handleChangeFiles([item.node.image.uri])}
+              >
+                <Image source={{uri:item.node.image.uri}} style={styles.item}/>
+							</TouchableOpacity>
+            )}
 						keyExtractor={ item => `Write-photo-${item.node.image.uri}` }
 						ListHeaderComponent={ () => (
 							<TouchableOpacity

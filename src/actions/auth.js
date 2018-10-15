@@ -7,7 +7,7 @@ export const logout = createAction('LOGOUT');
 export const join = createAction('JOIN');
 export const verifyMail = createAction('VERIFYMAIL');
 
-const loginUri = `${host}/api/auth/local`;
+const loginUri = `${host}/api/auth/login/local`;
 const logoutUri = `${host}/api/auth/logout`;
 const joinUri = `${host}/api/auth/join`;
 const verifyMailUri = `${host}/api/auth/verify`;
@@ -24,7 +24,6 @@ export const fetchLogin = (data) => {
 			credentials: 'include'
 		});
 		const body = await resp.json();
-		console.log(body);
 		if(body.data){
 			return dispatch(login(body.data));
 		} else {
