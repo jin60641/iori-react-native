@@ -21,7 +21,7 @@ export const fetchFollow = (data) => {
 		if(body.data !== null){
 			return dispatch(follow(body.data));
 		} else {
-			return dispatch(follow(new Error(body.msg)));
+			return dispatch(follow(new Error(body.message)));
 		}
 	}
 };

@@ -27,7 +27,7 @@ export const fetchLogin = (data) => {
 		if(body.data){
 			return dispatch(login(body.data));
 		} else {
-			return dispatch(login(new Error(body.msg)));
+			return dispatch(login(new Error(body.message)));
 		}
 	}
 };
@@ -59,7 +59,7 @@ export const fetchJoin = (data) => {
 		if(body.data){
 			return dispatch(join(body.data));
 		} else {
-			return dispatch(join(new Error(body.msg)));
+			return dispatch(join(new Error(body.message)));
 		}
 	}
 };
@@ -79,7 +79,7 @@ export const fetchCertifyMail = (data) => {
 		if(body.data){
 			return dispatch(verifyMail(body.data));
 		} else {
-			return dispatch(verifyMail(new Error(body.msg)));
+			return dispatch(verifyMail(new Error(body.message)));
 		}
 	}
 };

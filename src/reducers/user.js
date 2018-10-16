@@ -22,7 +22,7 @@ export default handleActions({
         if( action.error ) {
             return state;
         }
-        return null;
+        return {};
     },
 	[setProfile]: (state, action) => {
 		if( action.error ) {

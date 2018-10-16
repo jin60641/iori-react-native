@@ -60,7 +60,7 @@ class Login extends Component {
 						<TextInput 
 							style={styles.loginInput}
 							onChangeText={text=>this.handleChangeText('email',text)} 
-							textContentType='email' 
+							textContentType='emailAddress' 
 							autoCapitalize='none'
 							placeholder='이메일 혹은 핸들'
 							onFocus={()=>this.onFocus('email')}
