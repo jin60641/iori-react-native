@@ -3,6 +3,9 @@ apply plugin: "com.android.application"
 import com.android.build.OutputFile
 
 apply from: "../../node_modules/react-native/react.gradle"
+project.ext.react = [
+        entryFile: "index.js"
+]
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -21,17 +24,18 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.react_native_navigation_bootstrap"
         minSdkVersion 17
-        targetSdkVersion 22
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        vectorDrawables.useSupportLibrary = true
     }
     splits {
         abi {
@@ -63,6 +67,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-navigation')
     compile project(':react-native-image-crop-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:26.1.0"

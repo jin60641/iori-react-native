@@ -13,7 +13,7 @@ class Viewer extends Component {
 	render(){
 		const { handleCloseViewer, index } = this.props;
 		return(
-			<Modal visible={index>=0} transparent={true} animationType="fade">
+			<Modal visible={index>=0} transparent={true} animationType="fade" onRequestClose={() => null}>
 				<ImageViewer imageUrls={this.images} onSwipeDown={handleCloseViewer} enableSwipeDown={true} index={index}/>
 			</Modal>
 		);
