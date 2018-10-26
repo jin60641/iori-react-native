@@ -12,6 +12,7 @@ export default StyleSheet.create({
 		borderWidth : 1,
 		borderColor : colors.main,
 		flex : 1,
+    height: 30,
 		fontSize : 16,
 		borderRadius : 4,
 		marginLeft : 10,

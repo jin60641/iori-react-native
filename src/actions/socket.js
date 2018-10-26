@@ -29,7 +29,7 @@ export const fetchConnectSocket = () => {
 				}, 3000);
 
 				socket.on('connect', () => {
-					console.log('connected!!!');
+          socket.emit('login');
 					clearTimeout(timer);
 					resolve();
 				});

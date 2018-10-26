@@ -41,7 +41,10 @@ class Form extends Component {
 		if( !text.length ){
 			return null;
 		}
-		this.textarea.clear();
+		this.setState({
+			text: '',
+		});
+    this.textarea.setNativeProps({ text: ' ' })
 		const { handleSend } = this.props;
 		handleSend({ text });
 	}

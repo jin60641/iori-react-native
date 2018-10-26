@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { AppRegistr } from 'react-native';
+import { AppRegistr, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 import colors from './styles/colors';
 
 import createStore from './store/store';
-const store = createStore();
 import { Provider } from 'react-redux';
 
 import Home from './components/Home/Home';
@@ -21,6 +20,10 @@ import Write from './components/Write/Write';
 import Viewer from './components/Viewer/Viewer';
 import Notice from './components/Notice/Notice';
 import Setting from './components/Setting/Setting';
+
+const { width } = Dimensions.get('window');
+
+const store = createStore();
 
 const add = (name,component) => {
 	Navigation.registerComponent(name, () => component, store, Provider );
@@ -92,7 +95,7 @@ Navigation.startTabBasedApp({
 		left: { 
 			screen: 'Side',
 			passProps: {}, 
-			fixedWidth: 500,
+			fixedWidth: width * 2,
 		},
 		style: { // ( iOS only )
 			drawerShadow: false, // optional, add this if you want a side menu drawer shadow

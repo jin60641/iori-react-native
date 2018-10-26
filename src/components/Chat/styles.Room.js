@@ -10,9 +10,7 @@ export default StyleSheet.create({
     },
 	list : {
 		padding : 10,
-		transform: [{ scaleY: -1 }]
 	},
 	item : {
-		transform: [{ scaleY: -1 }]
 	}
 });

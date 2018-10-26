@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles.Room.js';
 import colors from '../../styles/colors';
@@ -74,9 +75,8 @@ class Room extends Component {
 		return(
 			<KeyboardAvoidingView 
 				style={styles.Room}
-				behavior="position"
-				enabled={true} 
-				keyboardVerticalOffset={64}
+				behavior={Platform.OS === 'ios' && 'position'}
+        keyboardVerticalOffset={Platform.OS === 'ios' && 86}
 			>  
 				<FlatList
 					inverted
